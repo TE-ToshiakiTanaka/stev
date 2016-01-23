@@ -113,4 +113,5 @@ setup(
         "Programming Language :: Python",
     ],
     zip_safe=False,
+    test_suite = 'test'
 )
