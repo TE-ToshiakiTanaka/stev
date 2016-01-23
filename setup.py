@@ -85,12 +85,12 @@ def find_package_data(
     return out
 
 
-PACKAGE = "stev"
-NAME = "stev"
+PACKAGE = "stve"
+NAME = "stve"
 DESCRIPTION = ""
 AUTHOR = "Toshiaki.Tanaka"
 AUTHOR_EMAIL = "Toshiaki.Tanaka@jp.sony.com"
-URL = "https://github.com/TE-ToshiakiTanaka/stev"
+URL = "https://github.com/TE-ToshiakiTanaka/stve"
 VERSION = __import__(PACKAGE).__version__
 
 
