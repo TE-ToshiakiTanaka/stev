@@ -85,7 +85,7 @@ def find_package_data(
     return out
 
 
-PACKAGE = "stve"
+PACKAGE = "src"
 NAME = "stve"
 DESCRIPTION = ""
 AUTHOR = "Toshiaki.Tanaka"

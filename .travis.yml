@@ -1,7 +1,0 @@
-# https://travis-ci.org/TE-ToshiakiTanaka/stve
-language: python
-python:
-    - 2.7
-
-script:
-    - python setup.py test
