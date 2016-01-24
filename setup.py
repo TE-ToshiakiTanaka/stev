@@ -11,7 +11,7 @@ def read(filename):
 
 standard_exclude = ["*.py", "*.pyc", "*$py.class", "*~", ".*", "*.bak"]
 standard_exclude_directories = [
-    ".*", "CVS", "_darcs", "./build", "./dist", "EGG-INFO", "*.egg-info"
+    ".*", "CVS", "_darcs", "./build", "./dist", "EGG-INFO", "*.egg-info", "./test"
 ]
 
 def find_package_data(
@@ -85,14 +85,13 @@ def find_package_data(
     return out
 
 
-PACKAGE = "src"
+PACKAGE = "stve"
 NAME = "stve"
 DESCRIPTION = ""
 AUTHOR = "Toshiaki.Tanaka"
 AUTHOR_EMAIL = "Toshiaki.Tanaka@jp.sony.com"
 URL = "https://github.com/TE-ToshiakiTanaka/stve"
 VERSION = __import__(PACKAGE).__version__
-
 
 setup(
     name=NAME,
@@ -103,7 +102,7 @@ setup(
     author_email=AUTHOR_EMAIL,
     license="MIT",
     url=URL,
-    packages=find_packages(exclude=["tests.*", "tests"]),
+    packages=find_packages(exclude=["test.*", "test"]),
     package_data=find_package_data(PACKAGE, only_in_packages=False),
     classifiers=[
         "Development Status :: 0.1 - Alpha",
