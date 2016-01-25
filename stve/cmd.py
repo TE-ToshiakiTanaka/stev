@@ -1,16 +1,28 @@
 import os
 import sys
-import pty
 import time
 import errno
-import signal
-import select
+import threading
+import subprocess
 
 from datetime import datetime, timedelta
 
 from stve.exception import *
 
-def run_bg(cmd, debug=False, cwd=''):
+class ThreadWithReturn(threading.Thread):
+    def __init__(self, *args, **kwargs):
+        super(ThreadWithReturn, self).__init__(*args, **kwargs)
+        self._return = None
+
+    def run(self):
+        if self._Thread__target is not None:
+            self._return = self._Thread__target(*self._Thread__args, **self._Thread__kwargs)
+
+    def join(self, timeout=None):
+        super(ThreadWithReturn, self).join(timeout=timeout)
+        return self._return
+
+def run(cmd, cwd=None, timeout=60, debug=False):
     if type(cmd) in [str, unicode]:
         cmd = [c for c in cmd.split() if c != '']
     if debug:
@@ -18,96 +30,38 @@ def run_bg(cmd, debug=False, cwd=''):
         sys.stderr.flush()
 
     try:
-        ( child_pid, child_fd ) = pty.fork()
-    except OSError as e:
-        raise RunError(cmd, None, message='pty.fork() failed: %s' % str(e))
-    if child_pid == 0:
-        try:
-            if cwd != '':
-                os.chdir(cwd)
-            os.execvp(cmd[0], cmd)
-        except Exception as e:
-            raise RunError(cmd, None, message='os.execvp() failed: %s' % str(e))
-    else:
-        return child_pid, child_fd
-
-def run(cmd, timeout, debug=False, cwd='', output_file=None):
-    if type(cmd) in [str, unicode]:
-        cmd = [c for c in cmd.split() if c != '']
-    if debug:
-        sys.stderr.write(''.join(cmd) + '\n')
-        sys.stderr.flush()
-    if output_file and type(output_file) is not file:
-        raise OSError('Parameter "output_file" must be type file')
-
-    out = ''
-    try:
-        ( child_pid, fd ) = pty.fork()
-    except OSError as e:
-        raise RunError(cmd, None, message='pty.fork() failed: %s' % str(e))
-    if child_pid == 0:
-        try:
-            if cwd != '':
-                os.chdir(cwd)
-            os.execvp(cmd[0], cmd)
-        except Exception as e:
-            raise RunError(cmd, None, message='os.execvp() failed: %s' % str(e))
-    else:
-        if time > 0:
-            limit = datetime.now() + timedelta(seconds=timeout)
+        proc = subprocess.Popen(cmd,
+                                cwd     = cwd,
+                                stdout  = subprocess.PIPE,
+                                stderr  = subprocess.PIPE)
+        proc_thread = ThreadWithReturn(target=proc.communicate)
+        proc_thread.start()
+        result = proc_thread.join(timeout)
+        if proc_thread.is_alive():
+            try:
+                proc.kill()
+            except OSError as e:
+                out = "{}: {}\n{}".format(type(e).__name__, e, traceback.format_exc())
+                raise RunError(cmd, None, message='Raise Exception : %s' % out)
+            raise TimeoutError({
+                'cmd'       : cmd,
+                'out'       : None,
+                'message'   : 'command %s is time out' % cmd
+            })
+        returncode = proc.returncode
+        if result == None:
+            out = None; err = None;
         else:
-            limit = None
-        p = select.poll()
-        mask = (
-            select.POLLERR | select.POLLHUP | select.POLLNVAL | select.POLLIN | select. POLLPRI
-        )
-        p.register(fd, mask)
-        stop = False
-        try:
-            while (not stop):
-                if limit and datetime.now() > limit:
-                    raise TimeoutError({
-                        'cmd'       : cmd,
-                        'out'       : out,
-                        'message'   : 'command time out'
-                    })
-                try:
-                    events = p.poll(100) #ms
-                except select.error as e:
-                    if e[0] == errno.EINTR:
-                        continue
-                for efd, flags in events:
-                    if debug:
-                        sys.stderr.write('flags: 0x%02x\n' % flags)
-                        sys.stderr.flush()
+            out = result[0]; err = result[1]
 
-                    if (flags & select.POLLIN or flags & select.POLLPRI):
-                        tmp = os.read(efd, 4096)
-                        if debug:
-                            sys.stderr.write('read %d\n' % len(tmp))
-                            sys.stderr.write(tmp)
-                            sys.stderr.write('\n')
-                            sys.stderr.flush()
-                        out += tmp
-                        if output_file:
-                            output_file.write(tmp)
-                    elif (flags & select.POLERR or flags & select.POLLHUP or flags & select.POLLNVAL):
-                        stop = True
+    except RuntimeError as e:
+        out = "{}: {}\n{}".format(type(e).__name__, e, traceback.format_exc())
+        raise RunError(cmd, None, message='Raise Exception : %s' % out)
+    if isinstance(out, bytes): out = out.decode("utf8")
+    if isinstance(err, bytes): err = err.decode("utf8")
+    return (returncode, out, err)
 
-        except Exception as e:
-            os.kill(child_pid, signal.SIGKILL)
-            os.waitpid(child_pid, 0)
-            os.close(fd)
-            raise e
-
-        s = os.waitpid(child_pid, 0)
-        result = s[1]
-        if result >> 15 == 1:
-            a = 256 - (result >> 8)
-            a *= -1
-        else:
-            a = result >> 8
-        os.close(fd)
-        return (a, out, '')
-
-run('sleep 10', timeout=5)
+try:
+    print run('ls', timeout=2)
+except TimeoutError:
+    print "TimeoutError"
