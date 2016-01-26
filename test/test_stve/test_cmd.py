@@ -9,13 +9,18 @@ def teardown():
     pass
 
 @with_setup(setup, teardown)
-def test_cmd_run_success():
+def test_cmd_run_success_01():
     result = cmd.run("ls")
-    eq_(result[0], 1)
+    eq_(result[0], 0)
+
+@with_setup(setup, teardown)
+def test_cmd_run_failed_01():
+    result = cmd.run('ls -la | wc -l')
+    eq_(result[0], 2)
 
 @with_setup(setup, teardown)
 @raises(RunError)
-def test_cmd_run_failed():
+def test_cmd_run_failed_02():
     result = cmd.run("hoge")
     eq_(result[0], 1)
 
