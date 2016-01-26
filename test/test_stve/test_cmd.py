@@ -1,0 +1,41 @@
+from nose.tools import with_setup, raises, ok_, eq_, timed
+from stve import cmd
+from stve.exception import *
+
+def setup():
+    pass
+
+def teardown():
+    pass
+
+@with_setup(setup, teardown)
+def test_cmd_run_success():
+    result = cmd.run("ls")
+    eq_(result[0], 0)
+
+@with_setup(setup, teardown)
+@raises(RunError)
+def test_cmd_run_failed():
+    result = cmd.run("hoge")
+    eq_(result[0], 1)
+
+@with_setup(setup, teardown)
+@timed(2.2)
+def test_cmd_run_sleep_success():
+    result = cmd.run("sleep 2", timeout=5)
+    eq_(result[0], 0)
+
+@with_setup(setup, teardown)
+@raises(TimeoutError)
+def test_cmd_run_sleep_timeout_01():
+    result = cmd.run("sleep 10", timeout=5)
+    eq_(result[0], 0)
+
+@with_setup(setup, teardown)
+@timed(5.2)
+def test_cmd_run_sleep_timeout_02():
+    try:
+        result = cmd.run("sleep 10", timeout=5)
+        eq_(result, None)
+    except TimeoutError as e:
+        print str(e)

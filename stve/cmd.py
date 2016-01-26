@@ -5,8 +5,6 @@ import errno
 import threading
 import subprocess
 
-from datetime import datetime, timedelta
-
 from stve.exception import *
 
 class ThreadWithReturn(threading.Thread):
@@ -74,14 +72,17 @@ def run(cmd, cwd=None, timeout=60, debug=False):
         else:
             out = result[0]; err = result[1]
 
+    except WindowsError as e:
+        out = "{}: {}\n{}".format(type(e).__name__, e, traceback.format_exc())
+        raise RunError(cmd, None, message='Raise Exception : %s' % out)
+
     except RuntimeError as e:
         out = "{}: {}\n{}".format(type(e).__name__, e, traceback.format_exc())
         raise RunError(cmd, None, message='Raise Exception : %s' % out)
-    if isinstance(out, bytes): out = out.decode("utf8")
-    if isinstance(err, bytes): err = err.decode("utf8")
+    try:
+        if isinstance(out, bytes): out = out.decode("utf8")
+        if isinstance(err, bytes): err = err.decode("utf8")
+    except UnicodeDecodeError as e:
+        out = "{}: {}\n{}".format(type(e).__name__, e, traceback.format_exc())
+        print out
     return (returncode, out, err)
-
-try:
-    print run_bg('sleep 10')
-except Exception as e:
-    print str(e)

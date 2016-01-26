@@ -78,5 +78,5 @@ class RunError(StveError):
 
     def __str__(self):
         return '%s:\n%s:\n%s' % (
-            self.cmd, self.message.encode('utf8'), self.out.encode('utf8')
+            self.cmd, self.message, self.out
         )
