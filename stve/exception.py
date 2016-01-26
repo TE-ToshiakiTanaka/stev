@@ -80,3 +80,11 @@ class RunError(StveError):
         return '%s:\n%s:\n%s' % (
             self.cmd, self.message, self.out
         )
+
+class LogError(StveError):
+    def __init__(self, details):
+        if type(details) in [str, unicode]:
+            details = {
+                'message': details
+            }
+        StveError.__init__(self, details)
