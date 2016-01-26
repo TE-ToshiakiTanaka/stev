@@ -11,7 +11,7 @@ def teardown():
 @with_setup(setup, teardown)
 def test_cmd_run_success():
     result = cmd.run("ls")
-    eq_(result[0], 0)
+    eq_(result[0], 1)
 
 @with_setup(setup, teardown)
 @raises(RunError)
