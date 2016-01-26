@@ -22,6 +22,26 @@ class ThreadWithReturn(threading.Thread):
         super(ThreadWithReturn, self).join(timeout=timeout)
         return self._return
 
+def run_bg(cmd, cwd=None, debug=False):
+    if type(cmd) in [str, unicode]:
+        cmd = [c for c in cmd.split() if c != '']
+    if debug:
+        sys.stderr.write(''.join(cmd) + '\n')
+        sys.stderr.flush()
+
+    try:
+        proc = subprocess.Popen(cmd,
+                                cwd     = cwd,
+                                stdout  = subprocess.PIPE,
+                                stderr  = subprocess.PIPE)
+        proc_thread = ThreadWithReturn(target=proc.communicate)
+        proc_thread.daemon = True
+        proc_thread.start()
+    except OSError as e:
+        raise RunError(cmd, None, message='Raise Exception : %s' % str(e))
+    returncode = proc.returncode
+    return (returncode)
+
 def run(cmd, cwd=None, timeout=60, debug=False):
     if type(cmd) in [str, unicode]:
         cmd = [c for c in cmd.split() if c != '']
@@ -62,6 +82,6 @@ def run(cmd, cwd=None, timeout=60, debug=False):
     return (returncode, out, err)
 
 try:
-    print run('ls', timeout=2)
-except TimeoutError:
-    print "TimeoutError"
+    print run_bg('sleep 10')
+except Exception as e:
+    print str(e)
