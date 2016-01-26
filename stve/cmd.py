@@ -72,7 +72,7 @@ def run(cmd, cwd=None, timeout=60, debug=False):
         else:
             out = result[0]; err = result[1]
 
-    except WindowsError as e:
+    except OSError as e:
         out = "{}: {}\n{}".format(type(e).__name__, e, traceback.format_exc())
         raise RunError(cmd, None, message='Raise Exception : %s' % out)
 
