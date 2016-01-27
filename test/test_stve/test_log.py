@@ -8,7 +8,7 @@ from stve.exception import *
 class TestLog(object):
     @classmethod
     def setup(cls):
-        cls.LOG = log.Log("test.STVE")
+        cls.LOG = log.Log("TEST.STVE")
         cls.original_logger = cls.LOG.logger
         cls.stream = StringIO()
         cls.log_handler = logging.StreamHandler(cls.stream)
