@@ -16,7 +16,7 @@ def test_cmd_run_success_01():
 @with_setup(setup, teardown)
 def test_cmd_run_failed_01():
     result = cmd.run('ls -la | wc -l')
-    eq_(result[0], 0)
+    eq_(result[0], 2)
 
 @with_setup(setup, teardown)
 @raises(RunError)
