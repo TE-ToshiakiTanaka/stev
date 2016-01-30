@@ -1,3 +1,6 @@
+from __future__ import print_function
+from builtins import *
+
 from nose.tools import with_setup, raises, ok_, eq_, timed
 from stve import cmd
 from stve.exception import *
@@ -43,4 +46,4 @@ def test_cmd_run_sleep_timeout_02():
         result = cmd.run("sleep 10", timeout=5)
         eq_(result, None)
     except TimeoutError as e:
-        print str(e)
+        print(str(e))
