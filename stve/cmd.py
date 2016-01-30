@@ -1,3 +1,7 @@
+from __future__ import unicode_literals
+from future.utils import string_types
+from builtins import str
+
 import os
 import sys
 import time
@@ -21,7 +25,7 @@ class ThreadWithReturn(threading.Thread):
         return self._return
 
 def run_bg(cmd, cwd=None, debug=False):
-    if type(cmd) in [str, unicode]:
+    if type(cmd) in [str, string_types]:
         cmd = [c for c in cmd.split() if c != '']
     if debug:
         sys.stderr.write(''.join(cmd) + '\n')
@@ -41,7 +45,7 @@ def run_bg(cmd, cwd=None, debug=False):
     return (returncode)
 
 def run(cmd, cwd=None, timeout=60, debug=False):
-    if type(cmd) in [str, unicode]:
+    if type(cmd) in [str, string_types]:
         cmd = [c for c in cmd.split() if c != '']
     if debug:
         sys.stderr.write(''.join(cmd) + '\n')
