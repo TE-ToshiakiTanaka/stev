@@ -1,20 +1,28 @@
 machine:
     python:
-        version: 2.6
-        version: 2.7
-        version: 3.3
-        version: 3.4
+        version: '2.7.9'
     timezone: Asia/Tokyo
+    environment:
+        TOX_PY:   '2.7.9'
+        TOX_PY26: '2.6.6'
+        TOX_PY27: '2.7.10'
+        TOX_PY33: '3.3.3'
+        TOX_PY34: '3.4.3'
+        TOX_PY35: '3.5.0'
 
 dependencies:
     pre:
+        - pip -V
+        - pip install -U pip
+        - pip install -U ipdb
+        - pip install -U tox
         - pip install wheel
-        - pip install nose
-        - pip install coverage
+        - pyenv local $TOX_PY35 $TOX_PY34 $TOX_PY33 $TOX_PY27 $TOX_PY26
 
 test:
     override:
         - nosetests -v --with-xunit --with-coverage --cover-branches --cover-html
+        - tox -v --recreate
         - python setup.py bdist_wheel
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/
