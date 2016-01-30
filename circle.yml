@@ -21,7 +21,6 @@ dependencies:
 
 test:
     override:
-        - nosetests -v --with-xunit --with-coverage --cover-branches --cover-html
         - tox -v --recreate
         - python setup.py bdist_wheel
     post:
