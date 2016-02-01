@@ -1,6 +1,3 @@
-from __future__ import print_function
-from builtins import *
-
 from nose.tools import with_setup, raises, ok_, eq_, timed
 from stve import cmd
 from stve.exception import *
