@@ -1,5 +1,5 @@
 import logging
-from StringIO import StringIO
+from io import StringIO
 from nose.tools import with_setup, raises, ok_, eq_
 
 from stve import log

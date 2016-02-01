@@ -1,3 +1,7 @@
+from __future__ import unicode_literals
+from future.utils import string_types
+from builtins import str
+
 import sys
 import traceback
 
@@ -16,7 +20,7 @@ class StveError(Exception):
         if not type(details) == dict:
             raise Exception('StveError details must be a dictionary')
         for key in details:
-            if type(key) not in [str, unicode]:
+            if type(key) not in [str, string_types]:
                 raise Exception('StveError details key must be strings')
         if 'message' not in details:
             raise Exception('StveError details must have mesage field')
@@ -60,7 +64,7 @@ class StveError(Exception):
 
 class TimeoutError(StveError):
     def __init__(self, details):
-        if type(details) in [str, unicode]:
+        if type(details) in [str, string_types]:
             details = {
                 'message': details
             }
@@ -83,7 +87,7 @@ class RunError(StveError):
 
 class LogError(StveError):
     def __init__(self, details):
-        if type(details) in [str, unicode]:
+        if type(details) in [str, string_types]:
             details = {
                 'message': details
             }
