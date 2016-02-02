@@ -1,29 +1,17 @@
-from __future__ import unicode_literals
-from future.utils import string_types
-from builtins import str
-
 import sys
 import traceback
-
-def amend_excepthook(hook):
-    def stve_excepthook(cls, exc, tb):
-        hook(cls, exc, tb)
-        if isinstance(exc, StveError):
-            sys.stderr.write("\n STVE server side exception trace:\n")
-            exc.print_trace()
-    return stve_excepthook
 
 class StveError(Exception):
     details = None # {<string>:<base type>, ... }
 
     def __init__(self, details):
         if not type(details) == dict:
-            raise Exception('StveError details must be a dictionary')
+            raise Exception('StveError : details must be a dictionary')
         for key in details:
-            if type(key) not in [str, string_types]:
-                raise Exception('StveError details key must be strings')
+            if type(key) not in [str, unicode]:
+                raise Exception('StveError : details key must be strings')
         if 'message' not in details:
-            raise Exception('StveError details must have mesage field')
+            raise Exception('StveError : details must have mesage field')
         if 'type' not in details:
             details['type'] = type(self).__name__
         self.details = details
@@ -64,7 +52,7 @@ class StveError(Exception):
 
 class TimeoutError(StveError):
     def __init__(self, details):
-        if type(details) in [str, string_types]:
+        if type(details) in [str, unicode]:
             details = {
                 'message': details
             }
@@ -87,7 +75,15 @@ class RunError(StveError):
 
 class LogError(StveError):
     def __init__(self, details):
-        if type(details) in [str, string_types]:
+        if type(details) in [str, unicode]:
+            details = {
+                'message': details
+            }
+        StveError.__init__(self, details)
+
+class WorkspaceError(StveError):
+    def __init__(self, details):
+        if type(details) in [str, unicode]:
             details = {
                 'message': details
             }
