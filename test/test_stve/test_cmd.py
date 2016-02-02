@@ -43,4 +43,4 @@ def test_cmd_run_sleep_timeout_02():
         result = cmd.run("sleep 10", timeout=5)
         eq_(result, None)
     except TimeoutError as e:
-        print str(e)
+        print(str(e))

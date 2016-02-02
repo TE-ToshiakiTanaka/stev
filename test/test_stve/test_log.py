@@ -1,3 +1,4 @@
+import os
 import logging
 from StringIO import StringIO
 from nose.tools import with_setup, raises, ok_, eq_

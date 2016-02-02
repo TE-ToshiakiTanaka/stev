@@ -84,5 +84,5 @@ def run(cmd, cwd=None, timeout=60, debug=False):
         if isinstance(err, bytes): err = err.decode("utf8")
     except UnicodeDecodeError as e:
         out = "{}: {}\n{}".format(type(e).__name__, e, traceback.format_exc())
-        print out
+        sys.stderr.write(out)
     return (returncode, out, err)

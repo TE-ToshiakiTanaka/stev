@@ -79,3 +79,5 @@ class Log(object):
     def warning(self, message): self.log('w', message)
     def error(self, message): self.log('e', message)
     def critical(self, message): self.log('c', message)
+
+LOG = Log("system.stve")
