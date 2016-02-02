@@ -10,7 +10,7 @@ from stve.exception import *
 class ThreadWithReturn(threading.Thread):
     def __init__(self, *args, **kwargs):
         super(ThreadWithReturn, self).__init__(*args, **kwargs)
-        self._return = None
+        self._return = None 
 
     def run(self):
         if self._Thread__target is not None:
