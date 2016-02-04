@@ -13,15 +13,13 @@ dependencies:
         - pip -V
         - pip install -U pip
         - pip install -U ipdb
-        - pip install -U tox
-        - pip install wheel
         - pip install -U -r requirements.txt
         - pyenv local $TOX_PY27 #$TOX_PY34 $TOX_PY33 $TOX_PY27 $TOX_PY26
 
 test:
     override:
         - tox -v --recreate
-        - nosetests -v --with-xunit --with-coverage --cover-branches --cover-html test\*
+        - nosetests -v --with-xunit --with-coverage --cover-branches --cover-html
         - python setup.py bdist_wheel
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/

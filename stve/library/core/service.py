@@ -15,7 +15,3 @@ class Factory(object):
 
 NAME = "core"
 FACTORY = Factory()
-
-if __name__ == "__main__":
-    p = FACTORY.get()
-    print p
