@@ -80,4 +80,4 @@ class Log(object):
     def error(self, message): self.log('e', message)
     def critical(self, message): self.log('c', message)
 
-LOG = Log("system.stve")
+LOG = Log("System.STVE")
