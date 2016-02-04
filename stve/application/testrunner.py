@@ -57,7 +57,7 @@ class StveTestRunner(object):
         else: suite.addTest(loader.loadTestsFromModule(module))
         xmlrunner.XMLTestRunner(output=output).run(suite)
 
-
+"""
 if __name__ == "__main__":
     runner = StveTestRunner()
     testcase_f = "testcase.py"
@@ -67,3 +67,4 @@ if __name__ == "__main__":
     #   os.mkdir(output)
     L.info("testcase name : %s " % testcase_f)
     runner.execute(testcase_f, host)
+"""
