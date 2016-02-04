@@ -64,7 +64,7 @@ class StveTestCase(unittest.TestCase):
             self.set("args.%s" % k, v)
 
     def arg_parse(self, parser):
-        parser.add_argument('-t', action='store', dest="testcase",
+        parser.add_argument(action='store', dest="testcase",
                             help='TestCase Name.')
         return parser
 
@@ -76,15 +76,3 @@ class StveTestCase(unittest.TestCase):
             in the wifi branch, Used service is there.
         """
         pass
-
-    # temporary methods.
-    @classmethod
-    def setUpClass(cls):
-        L.info("*** Start TestCase   : %s *** " % __file__)
-
-    def test(self):
-        self.assertTrue("master" == "master")
-
-    @classmethod
-    def tearDownClass(cls):
-        L.info("*** End TestCase     : %s *** " % __file__)

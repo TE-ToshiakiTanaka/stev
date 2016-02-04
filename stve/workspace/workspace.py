@@ -11,7 +11,7 @@ class Workspace(object):
     def __init__(self, path, clear=False):
         if not type(path) in [str, unicode]:
             raise WorkspaceError("path must be strings.")
-        self.default_path = path
+        self.default_path = os.path.abspath(path)
         if os.path.exists(path):
             if len(os.listdir(path)) > 0:
                 L.warning("It is not vacant folder in the path.")

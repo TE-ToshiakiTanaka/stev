@@ -12,7 +12,7 @@ class StveTestRunner(object):
     def __init__(self):
         pass
 
-    def load(self, testcase):
+    def load(self, testcase, host):
         if testcase.find(".py") != -1:
             script = testcase
         else:
@@ -35,7 +35,7 @@ class StveTestRunner(object):
 
         suite = unittest.TestSuite()
         loader = unittest.TestLoader()
-        module = self.load(script)
+        module = self.load(script, host)
         if not module:
             L.warning("Not loaded module : %s" % script)
         else: suite.addTest(loader.loadTestsFromModule(module))
@@ -51,7 +51,7 @@ class StveTestRunner(object):
 
         suite = unittest.TestSuite()
         loader = unittest.TestLoader()
-        module = self.load(script)
+        module = self.load(script, host)
         if not module:
             L.warning("Not loaded module : %s" % script)
         else: suite.addTest(loader.loadTestsFromModule(module))
