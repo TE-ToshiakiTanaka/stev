@@ -88,3 +88,20 @@ class WorkspaceError(StveError):
                 'message': details
             }
         StveError.__init__(self, details)
+
+
+class TestRunnerError(StveError):
+    def __init__(self, details):
+        if type(details) in [str, unicode]:
+            details = {
+                'message': details
+            }
+        StveError.__init__(self, details)
+
+class LibraryError(StveError):
+    def __init__(self, details):
+        if type(details) in [str, unicode]:
+            details = {
+                'message' : details
+            }
+        StveError.__init__(self, details)
