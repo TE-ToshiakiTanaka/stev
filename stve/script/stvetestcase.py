@@ -14,12 +14,7 @@ SYSTEM_LIBRARY = os.path.normpath(os.path.join(
 class StveTestCase(unittest.TestCase):
     config = {}
     service = {}
-    """
-        TestCase_Base.
-            - Parse Command Line Argument.
-            - Create Service's Instance.
-            - Read Config File and get value.
-    """
+
     def __init__(self, *args, **kwargs):
         global service
         super(StveTestCase, self).__init__(*args, **kwargs)
@@ -52,9 +47,6 @@ class StveTestCase(unittest.TestCase):
         return cls.config[name]
 
     def __parse(self):
-        """
-            Parse Command Line Arguments.
-        """
         parser = argparse.ArgumentParser()
 
         parser = self.arg_parse(parser)
@@ -71,8 +63,4 @@ class StveTestCase(unittest.TestCase):
 
     @classmethod
     def get_service(cls, settings):
-        """
-            Get Service.
-            in the wifi branch, Used service is there.
-        """
         pass

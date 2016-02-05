@@ -28,7 +28,7 @@ class StveTestRunner(object):
         else:
             return False
 
-    def execute(self, script, host):
+    def execute(self, script, host, v=2):
         if not os.path.exists(host):
             raise TestRunnerError("%s is not exists." % (host))
         sys.path.append(host)
@@ -38,8 +38,9 @@ class StveTestRunner(object):
         module = self.load(script, host)
         if not module:
             L.warning("Not loaded module : %s" % script)
+            raise TestRunnerError("%s is not extended StveTestCase." % script)
         else: suite.addTest(loader.loadTestsFromModule(module))
-        unittest.TextTestRunner(verbosity=2).run(suite)
+        unittest.TextTestRunner(verbosity=v).run(suite)
 
     def execute_with_report(self, script, host, output):
         if not os.path.exists(host):
@@ -54,5 +55,6 @@ class StveTestRunner(object):
         module = self.load(script, host)
         if not module:
             L.warning("Not loaded module : %s" % script)
+            raise TestRunnerError("%s is not extended StveTestCase." % script)
         else: suite.addTest(loader.loadTestsFromModule(module))
         xmlrunner.XMLTestRunner(output=output).run(suite)
