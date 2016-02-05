@@ -22,10 +22,14 @@ class StveTestRunner(object):
             raise TestRunnerError("%s is not exists." % (path))
         name = script[:script.find(".")]
         L.debug("TestCase : %s" % path)
-        if os.path.exists(path):
-            f, n, d = imp.find_module(str(name))
-            return imp.load_module(name, f, n, d)
-        else:
+        try:
+            if os.path.exists(path):
+                f, n, d = imp.find_module(str(name))
+                return imp.load_module(name, f, n, d)
+            else:
+                return False
+        except ImportError as e:
+            L.traceback()
             return False
 
     def execute(self, script, host, v=2):

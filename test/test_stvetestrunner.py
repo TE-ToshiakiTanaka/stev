@@ -51,6 +51,12 @@ class TestStveTestRunner(object):
         self.runner.execute("success.py", self.workspace.mkdir("script"))
 
     @with_setup(setup, teardown)
+    @raises(TestRunnerError)
+    def test_stvetestrunner_execute_failed_03(self):
+        with mock.patch('sys.argv', ['stvetestrunner.py', 'notdefine.py']):
+            self.runner.execute("not.pydefine", self.script_path, v=0)
+
+    @with_setup(setup, teardown)
     def test_stvetestrunner_execute_with_report_success_01(self):
         with mock.patch('sys.argv', ['stvetestrunner.py', 'notdefine.py']):
             self.runner.execute_with_report(
@@ -98,3 +104,10 @@ class TestStveTestRunner(object):
         with mock.patch('sys.argv', ['stvetestrunner.py', 'notdefine.py']):
             self.runner.execute_with_report(
                 "success.py", self.script_path, os.path.join(self.workspace.root(), "hoge"))
+
+    @with_setup(setup, teardown)
+    @raises(TestRunnerError)
+    def test_stvetestrunner_execute_with_report_failed_04(self):
+        with mock.patch('sys.argv', ['stvetestrunner.py', 'notdefine.py']):
+            self.runner.execute_with_report(
+                "not.pydefine", self.script_path, self.report_path)

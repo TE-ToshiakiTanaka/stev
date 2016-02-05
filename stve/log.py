@@ -56,7 +56,7 @@ class Log(object):
         h.setFormatter(f)
         return h
 
-    def traceback(self, level):
+    def traceback(self, level=logging.CRITICAL):
         _, _, _tb = sys.exc_info()
         stack_trace = traceback.extract_tb(_tb)
         self.log(level, "Stack Trace:")
