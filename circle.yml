@@ -18,9 +18,7 @@ dependencies:
 
 test:
     override:
-        - tox -v --recreate
-        - nosetests -v --with-xunit --with-coverage --cover-branches --cover-html
-        - python setup.py bdist_wheel
+        - tox -v
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/
         - mv nosetests.xml $CIRCLE_TEST_REPORTS/nose/

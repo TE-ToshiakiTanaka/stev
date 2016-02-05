@@ -96,7 +96,6 @@ class TestWorkspace(object):
     @with_setup(setup, teardown)
     def test_workspace_unique_success_01(self):
         result = self.workspace.unique()
-        print os.path.exists(result)
         ok_(os.path.exists(result))
 
     @with_setup(setup, teardown)
