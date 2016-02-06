@@ -3,10 +3,7 @@ machine:
         version: '2.7.10'
     timezone: Asia/Tokyo
     environment:
-        #TOX_PY26: '2.6.6'
         TOX_PY27: '2.7.10'
-        #TOX_PY33: '3.3.3'
-        #TOX_PY34: '3.4.3'
 
 dependencies:
     pre:
@@ -14,7 +11,7 @@ dependencies:
         - pip install -U pip
         - pip install -U ipdb
         - pip install -U -r requirements.txt
-        - pyenv local $TOX_PY27 #$TOX_PY34 $TOX_PY33 $TOX_PY27 $TOX_PY26
+        - pyenv local $TOX_PY27
 
 test:
     override:
