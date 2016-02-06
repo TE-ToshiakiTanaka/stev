@@ -8,7 +8,6 @@ machine:
 dependencies:
     pre:
         - pip -V
-        - pip install -U pip
         - pip install -U ipdb
         - pip install -U -r requirements.txt
         - pyenv local $TOX_PY27
@@ -16,6 +15,7 @@ dependencies:
 test:
     override:
         - tox -v
+        - nosetests -v --with-xunit --with-coverage --cover-branches --cover-html
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/
         - mv nosetests.xml $CIRCLE_TEST_REPORTS/nose/
