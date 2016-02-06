@@ -13,9 +13,6 @@ dependencies:
         - pyenv local $TOX_PY27
 
 test:
-    override:
-        - tox -v
-        - nosetests -v --with-xunit --with-coverage --cover-branches --cover-html
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/
         - mv nosetests.xml $CIRCLE_TEST_REPORTS/nose/
