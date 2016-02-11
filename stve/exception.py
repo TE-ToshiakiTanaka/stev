@@ -105,3 +105,11 @@ class LibraryError(StveError):
                 'message' : details
             }
         StveError.__init__(self, details)
+
+class PictureError(StveError):
+    def __init__(self, details):
+        if type(details) in [str, unicode]:
+            details = {
+                'message' : details
+            }
+        StveError.__init__(self, details)
