@@ -61,3 +61,6 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+opencv-2.4.11
+*.zip
