@@ -30,8 +30,9 @@ if [ -z "$OPENCVPATH" ]; then
 fi
 export PYTHONPATH=$OPENCVPATH:$PYTHONPATH
 SITE_PACKAGES=`python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"`
-sudo cp $OPENCVPATH/cv2.so $SITE_PACKAGES
-sudo cp $OPENCVPATH/cv.py $SITE_PACKAGES
+cd $SITE_PACKAGES
+ln -s $OPENCVPATH/cv2.so cv2.so
+ln -s $OPENCVPATH/cv.py cv.py
 
 # ignore libdc1394 error http://stackoverflow.com/questions/12689304/ctypes-error-libdc1394-error-failed-to-initialize-libdc1394
 #python
