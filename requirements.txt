@@ -9,7 +9,6 @@ Pillow==2.9.0
 pluggy==0.3.1
 py==1.4.31
 six==1.10.0
-stve==0.1.0
 tox==2.3.1
 virtualenv==14.0.5
 wheel==0.26.0

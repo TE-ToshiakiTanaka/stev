@@ -8,8 +8,6 @@ machine:
 dependencies:
     pre:
         - ./opencv_install.sh
-        - echo $PYTHONPATH
-        - echo $PATH
         - pip -V
         - pip install -U ipdb
         - pip install -U -r requirements.txt
