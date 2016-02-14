@@ -40,7 +40,7 @@ class Picture(object):
     def exists(cls, filename):
         if os.path.exists(filename): return True
         else:
-            L.warning("%s is not exists." % filename)
+            cls.L.warning("%s is not exists." % filename)
             raise PictureError("%s is not exists." % filename)
 
     @classmethod
@@ -49,7 +49,7 @@ class Picture(object):
             try:
                 return Image.open(filename, 'r')
             except IOError as e:
-                L.warning("I/O Error %s" % str(e))
+                cls.L.warning("I/O Error %s" % str(e))
                 raise PictureError("it is not success of loading picture %s" % filename)
 
     @classmethod
@@ -60,9 +60,11 @@ class Picture(object):
 
     @classmethod
     def to_pil(cls, opencv_pic):
-        if opencv_pic == None:
+        try:
+            return Image.formarray(opencv_pic)
+        except Exception as e:
+            cls.L.warning(str(e))
             raise PictureError("it is not exchange pic.")
-        return Image.formarray(opencv_pic)
 
     @classmethod
     def get_rgb(cls, pic, point=""):
@@ -90,10 +92,10 @@ class Picture(object):
     @classmethod
     def info(cls, filename):
         pic = cls.open(filename)
-        L.info("File Path   : %s " % filename)
-        L.info("File Format : %s " % pic.format)
-        L.info("File Size   : %s " % str(pic.size))
-        L.info("File Mode   : %s " % pic.mode)
+        cls.L.info("File Path   : %s " % filename)
+        cls.L.info("File Format : %s " % pic.format)
+        cls.L.info("File Size   : %s " % str(pic.size))
+        cls.L.info("File Mode   : %s " % pic.mode)
 
     @classmethod
     def convert(cls, from_file, to_file, mode, width, height):
@@ -128,7 +130,7 @@ class Picture(object):
         try:
             return ImageOps.grayscale(pic).convert("RGB")
         except IOError as e:
-            L.warning("I/O Error : %s" % str(e))
+            cls.L.warning("I/O Error : %s" % str(e))
             raise PictureError("it is not success of converting grayscale. %s" % pic)
 
     @classmethod
@@ -138,7 +140,7 @@ class Picture(object):
             brightness = ImageEnhance.Brightness(pic)
             return brightness.enhance(level)
         except IOError as e:
-            L.warning("I/O Error : %s" % str(e))
+            cls.L.warning("I/O Error : %s" % str(e))
             raise PictureError("it is not success of converting brightness. %s" % pic)
 
     @classmethod
@@ -148,7 +150,7 @@ class Picture(object):
             contrast_converter = ImageEnhance.Contrast(pic)
             return contrast_converter.enhance(threshold)
         except IOError as e:
-            L.warning("I/O Error : %s" % str(e))
+            cls.L.warning("I/O Error : %s" % str(e))
             raise PictureError("it is not success of converting contrast. %s" % pic)
 
     @classmethod
@@ -158,7 +160,7 @@ class Picture(object):
             sharpness_converter = ImageEnhance.Sharpness(pic)
             return sharpness_converter.enhance(threshold)
         except IOError as e:
-            L.warning("I/O Error : %s" % str(e))
+            cls.L.warning("I/O Error : %s" % str(e))
             raise PictureError("it is not success of converting sharpness. %s" % pic)
 
     @classmethod
@@ -168,7 +170,7 @@ class Picture(object):
         try:
             return pic.crop(box)
         except IOError as e:
-            L.info("I/O error : %s" % str(e))
+            cls.L.info("I/O error : %s" % str(e))
             raise PictureError("it is not succes of crop picture. %s" % pic)
 
     @classmethod
@@ -177,7 +179,7 @@ class Picture(object):
             cls.exists(filename)
             return Image.open(filename, 'r')
         except Error as e:
-            L.warning("Error : %s" % str(e))
+            cls.L.warning("Error : %s" % str(e))
             raise PictureError("it is not success of loading picture %s" % filename)
 
 
@@ -202,7 +204,7 @@ class Picture(object):
         if not os.path.exists(target):
             raise PictureError("it is not exists target file. : %s" % target)
 
-        L.info("target : %s" % target)
+        cls.L.info("target : %s" % target)
         img_rgb = cv2.imread(reference)
         img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
         template = cv2.imread(target, 0)
