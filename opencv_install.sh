@@ -26,16 +26,4 @@ if [ -z "$OPENCVPATH" ]; then
     cmake -G "Unix Makefiles" -D CMAKE_CXX_COMPILER=/usr/bin/g++ CMAKE_C_COMPILER=/usr/bin/gcc -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON -D BUILD_EXAMPLES=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D BUILD_FAT_JAVA_LIB=ON -D INSTALL_TO_MANGLED_PATHS=ON -D INSTALL_CREATE_DISTRIB=ON -D INSTALL_TESTS=ON -D ENABLE_FAST_MATH=ON -D WITH_IMAGEIO=ON -D BUILD_SHARED_LIBS=OFF -D WITH_GSTREAMER=ON ..
     make all -j4 # 4 cores
     sudo make install
-    OPENCVPATH=`sudo find / -name cv2.so | sed -e 's/\/cv2.so//g'`
 fi
-export PYTHONPATH=$OPENCVPATH:$PYTHONPATH
-SITE_PACKAGES=`python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"`
-cd $SITE_PACKAGES
-ln -s $OPENCVPATH/cv2.so cv2.so
-ln -s $OPENCVPATH/cv.py cv.py
-
-# ignore libdc1394 error http://stackoverflow.com/questions/12689304/ctypes-error-libdc1394-error-failed-to-initialize-libdc1394
-#python
-#> import cv2
-#> cv2.SIFT
-#<built-in function SIFT>
