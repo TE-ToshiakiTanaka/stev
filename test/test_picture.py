@@ -1,3 +1,4 @@
+import os
 from stve.script import StveTestCase
 from runner import TestStveTestRunner as TSTR
 from nose.tools import with_setup, raises, ok_, eq_
@@ -35,3 +36,29 @@ class TestPictureTestRuner(TSTR):
     def test_library_execute_picture_success_07(self):
         StveTestCase.set("system.tmp", self.tmp_path)
         self.base_library_execute_success("library_picture_07.py")
+
+    @with_setup(TSTR.setup, TSTR.teardown)
+    def test_library_execute_picture_success_08(self):
+        StveTestCase.set("system.tmp", self.tmp_path)
+        self.base_library_execute_success("library_picture_08.py")
+        self.workspace.rm(os.path.join(self.tmp_path, "test02.png"))
+
+    @with_setup(TSTR.setup, TSTR.teardown)
+    def test_library_execute_picture_success_09(self):
+        StveTestCase.set("system.tmp", self.tmp_path)
+        self.base_library_execute_success("library_picture_09.py")
+
+    @with_setup(TSTR.setup, TSTR.teardown)
+    def test_library_execute_picture_success_10(self):
+        StveTestCase.set("system.tmp", self.tmp_path)
+        self.base_library_execute_success("library_picture_10.py")
+
+    @with_setup(TSTR.setup, TSTR.teardown)
+    def test_library_execute_picture_success_11(self):
+        StveTestCase.set("system.tmp", self.tmp_path)
+        self.base_library_execute_success("library_picture_11.py")
+
+    @with_setup(TSTR.setup, TSTR.teardown)
+    def test_library_execute_picture_success_12(self):
+        StveTestCase.set("system.tmp", self.tmp_path)
+        self.base_library_execute_success("library_picture_12.py")

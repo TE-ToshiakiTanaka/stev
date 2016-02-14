@@ -61,7 +61,7 @@ class Picture(object):
     @classmethod
     def to_pil(cls, opencv_pic):
         try:
-            return Image.formarray(opencv_pic)
+            return Image.fromarray(opencv_pic)
         except Exception as e:
             cls.L.warning(str(e))
             raise PictureError("it is not exchange pic.")
@@ -90,9 +90,7 @@ class Picture(object):
         return pic.resize(sz)
 
     @classmethod
-    def info(cls, filename):
-        pic = cls.open(filename)
-        cls.L.info("File Path   : %s " % filename)
+    def info(cls, pic):
         cls.L.info("File Format : %s " % pic.format)
         cls.L.info("File Size   : %s " % str(pic.size))
         cls.L.info("File Mode   : %s " % pic.mode)
@@ -106,7 +104,7 @@ class Picture(object):
 
     @classmethod
     def save(cls, pic, filepath, q=100, opt=True):
-        cls.exists(filepath)
+        #cls.exists(filepath)
         if not os.path.exists(os.path.dirname(filepath)):
             raise PictureError("it is not exists parents directory. : %s" % os.path.dirname(filepath))
         pic.save(filepath, quality=q, optimize=opt)

@@ -20,12 +20,9 @@ class TestCase(StveTestCase):
         pic = self.service["stve.picture"].get()
 
         self.assertTrue(self.get("system.tmp") != None)
-        img = pic.open(os.path.join(self.get("system.tmp"), "test01.png"))
-        self.assertTrue(img != None)
-        opencv_img = pic.to_opencv(img)
-        img2 = pic.to_pil(opencv_img)
-        self.assertTrue(img2 != None)
-        pic.info(img2)
+        reference = os.path.join(self.get("system.tmp"), "test01.png")
+        target = os.path.join(self.get("system.tmp"), "test01_target01.png")
+        self.assertTrue(pic.is_pattern(reference, target))
 
     @classmethod
     def tearDownClass(cls):

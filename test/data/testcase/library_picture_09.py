@@ -22,10 +22,9 @@ class TestCase(StveTestCase):
         self.assertTrue(self.get("system.tmp") != None)
         img = pic.open(os.path.join(self.get("system.tmp"), "test01.png"))
         self.assertTrue(img != None)
-        opencv_img = pic.to_opencv(img)
-        img2 = pic.to_pil(opencv_img)
-        self.assertTrue(img2 != None)
-        pic.info(img2)
+        pic.info(img)
+        img2 = pic.resize(img, "480P")
+        self.assertTrue(str(img2.size) == "(640, 480)")
 
     @classmethod
     def tearDownClass(cls):

@@ -25,7 +25,11 @@ class TestCase(StveTestCase):
         opencv_img = pic.to_opencv(img)
         img2 = pic.to_pil(opencv_img)
         self.assertTrue(img2 != None)
-        pic.info(img2)
+        pic.save(img2, os.path.join(self.get("system.tmp"), "test02.png"))
+
+        img3 = pic.open(os.path.join(self.get("system.tmp"), "test01.png"))
+        self.assertTrue(img3 != None)
+        L.info(pic.info(img3))
 
     @classmethod
     def tearDownClass(cls):

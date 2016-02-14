@@ -21,7 +21,7 @@ class TestCase(StveTestCase):
 
         self.assertTrue(self.get("system.tmp") != None)
         L.info(os.path.join(self.get("system.tmp"), "test01.png"))
-        pic.info(os.path.join(self.get("system.tmp"), "test01.png"))
+        pic.info(pic.open(os.path.join(self.get("system.tmp"), "test01.png")))
 
     @classmethod
     def tearDownClass(cls):
