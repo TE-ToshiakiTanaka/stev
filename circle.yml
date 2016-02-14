@@ -7,8 +7,7 @@ machine:
 
 dependencies:
     pre:
-        - sudo apt-get update
-        - sudo apt-get install libopencv-dev python-opencv python-numpy
+        - ./opencv_install.sh
         - pip -V
         - pip install -U ipdb
         - pip install -U -r requirements.txt
