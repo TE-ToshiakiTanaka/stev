@@ -1,6 +1,6 @@
 #! /bin/bash
 # check cv2
-OPENCVPATH=`sudo find / -name cv2.so | sed -e 's/\/cv2.so//g'`
+OPENCVPATH=`sudo find / -name cv2.so | tail -1 | sed -e 's/\/cv2.so//g'` 2>/dev/null
 echo $OPENCVPATH
 
 if [ -z "$OPENCVPATH" ]; then
