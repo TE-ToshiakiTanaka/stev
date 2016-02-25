@@ -175,7 +175,9 @@ class AndroidUiAutomator(object):
 
     def build(self):
         os.chdir(ADB_JAR_AUBS)
-        result = run("gradlew.bat uiautomatorbuild")
+        if os.name =='nt': result = run("gradlew.bat uiautomatorbuild")
+        else: result = run("gradlew uiautomatorbuild")
+        
         if result[0] == 0:
             L.info(result[1].replace("\n",""))
         else:
