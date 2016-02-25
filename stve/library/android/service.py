@@ -5,17 +5,17 @@ LIB_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if not LIB_PATH in sys.path:
     sys.path.insert(0, LIB_PATH)
 
-from android import module
+from android.module import Android, __version__
 
 class Factory(object):
     def __init__(self):
         pass
 
     def version(self):
-        return module.__version__
+        return __version__
 
     def get(self, serial, host=module.PROFILE_PATH):
-        return module.Android(serial, host)
+        return Android(serial, host)
 
 
 NAME = "stve.android"

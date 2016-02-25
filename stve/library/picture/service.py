@@ -5,17 +5,17 @@ LIB_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if not LIB_PATH in sys.path:
     sys.path.insert(0, LIB_PATH)
 
-from picture import module
+from picture.module import Picture, __version__
 
 class Factory(object):
     def __init__(self):
         pass
 
     def version(self):
-        return module.__version__
+        return __version__
 
     def get(self):
-        return module.Picture()
+        return Picture()
 
 
 NAME = "stve.picture"
