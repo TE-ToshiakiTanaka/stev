@@ -1,5 +1,3 @@
-__version__ = (0, 1, 0)
-
 import os
 import sys
 import imp
@@ -183,7 +181,7 @@ class AndroidUiAutomator(object):
         else:
             L.warning(result[2].replace("\n",""))
             raise AndroidError("Android UiAutomator Build Failed.")
-            
+
     def push(self, jar):
         self._adb.push(jar, UIAUTOMATOR_PATH)
 

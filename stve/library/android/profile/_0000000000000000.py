@@ -1,7 +1,7 @@
 import os
 import sys
 
-from android import Android
+from android_base import Android
 
 class _0000000000000000(Android):
     SERIAL = "0000000000000000"
