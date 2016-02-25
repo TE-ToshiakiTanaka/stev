@@ -80,7 +80,7 @@ stve/library/*.apk
 stve/library/*.ap_
 stve/library/*.dex
 stve/library/*.class
-stve/library/android/jar/*/bin/
+# stve/library/android/jar/*/bin/
 stve/library/android/jar/*/gen/
 stve/library/android/jar/*/local.properties
 stve/library/android/jar/*/.classpath
