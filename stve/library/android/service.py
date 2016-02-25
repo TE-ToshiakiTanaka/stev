@@ -14,7 +14,7 @@ class Factory(object):
     def version(self):
         return module.__version__
 
-    def get(self, serial, host):
+    def get(self, serial, host=module.PROFILE_PATH):
         return module.Android(serial, host)
 
 
