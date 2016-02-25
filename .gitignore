@@ -64,3 +64,33 @@ target/
 
 opencv-2.4.11
 *.zip
+
+# APK
+.gradle
+stve/library/adb/apk/*/local.properties
+stve/library/adb/apk/*/.idea/workspace.xml
+stve/library/adb/apk/*/.idea/libraries
+stve/library/adb/apk/*/.DS_Store
+stve/library/adb/apk/*/app
+stve/library/adb/apk/*/build
+stve/library/adb/apk/*/captures
+
+# JAR
+stve/library/*.apk
+stve/library/*.ap_
+stve/library/*.dex
+stve/library/*.class
+stve/library/adb/jar/*/bin/
+stve/library/adb/jar/*/gen/
+stve/library/adb/jar/*/local.properties
+stve/library/adb/jar/*/.classpath
+stve/library/adb/jar/*/.project
+stve/library/adb/jar/*/proguard/
+*.iml
+*.ipr
+*.iws
+stve/library/adb/jar/*/.idea/workspace.xml
+stve/library/adb/jar/*/.idea/tasks.xml
+stve/library/adb/jar/*/.idea/libraries/
+stve/library/adb/jar/*/.gradle
+stve/library/adb/jar/*/build
