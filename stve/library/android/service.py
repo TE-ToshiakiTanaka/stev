@@ -5,7 +5,7 @@ LIB_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if not LIB_PATH in sys.path:
     sys.path.insert(0, LIB_PATH)
 
-from picture import module
+from android import module
 
 class Factory(object):
     def __init__(self):
@@ -14,9 +14,9 @@ class Factory(object):
     def version(self):
         return module.__version__
 
-    #def get(self):
-    #    return module.Picture()
+    def get(self, serial, host):
+        return module.Android(serial, host)
 
 
-NAME = "stve.picture"
+NAME = "stve.android"
 FACTORY = Factory()

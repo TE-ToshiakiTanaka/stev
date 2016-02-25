@@ -67,30 +67,30 @@ opencv-2.4.11
 
 # APK
 .gradle
-stve/library/adb/apk/*/local.properties
-stve/library/adb/apk/*/.idea/workspace.xml
-stve/library/adb/apk/*/.idea/libraries
-stve/library/adb/apk/*/.DS_Store
-stve/library/adb/apk/*/app
-stve/library/adb/apk/*/build
-stve/library/adb/apk/*/captures
+stve/library/android/apk/*/local.properties
+stve/library/android/apk/*/.idea/workspace.xml
+stve/library/android/apk/*/.idea/libraries
+stve/library/android/apk/*/.DS_Store
+stve/library/android/apk/*/app
+stve/library/android/apk/*/build
+stve/library/android/apk/*/captures
 
 # JAR
 stve/library/*.apk
 stve/library/*.ap_
 stve/library/*.dex
 stve/library/*.class
-stve/library/adb/jar/*/bin/
-stve/library/adb/jar/*/gen/
-stve/library/adb/jar/*/local.properties
-stve/library/adb/jar/*/.classpath
-stve/library/adb/jar/*/.project
-stve/library/adb/jar/*/proguard/
+stve/library/android/jar/*/bin/
+stve/library/android/jar/*/gen/
+stve/library/android/jar/*/local.properties
+stve/library/android/jar/*/.classpath
+stve/library/android/jar/*/.project
+stve/library/android/jar/*/proguard/
 *.iml
 *.ipr
 *.iws
-stve/library/adb/jar/*/.idea/workspace.xml
-stve/library/adb/jar/*/.idea/tasks.xml
-stve/library/adb/jar/*/.idea/libraries/
-stve/library/adb/jar/*/.gradle
-stve/library/adb/jar/*/build
+stve/library/android/jar/*/.idea/workspace.xml
+stve/library/android/jar/*/.idea/tasks.xml
+stve/library/android/jar/*/.idea/libraries/
+stve/library/android/jar/*/.gradle
+stve/library/android/jar/*/build

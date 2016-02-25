@@ -22,10 +22,10 @@ class Android:
     CATEGORY_ACTIVITY = "activity activities"
 
     # UiAutomator Jar : Default LASCALL
-    JAR_LASCALL = "lascall.jar"
+    JAR_AUBS = "aubs.jar"
 
     # Lascall Method
-    LASCALL = "com.sony.ste.lascall.Lascall"
+    AUBS = "jp.setsulla.stve.aubs.Aubs"
 
     # 3rd Party APK
     SIRON = "Siron.apk"
