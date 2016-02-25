@@ -1,3 +1,4 @@
+__version__ = (0, 1, 0)
 import os
 import sys
 
@@ -6,16 +7,17 @@ if not LIB_PATH in sys.path:
     sys.path.insert(0, LIB_PATH)
 
 from picture import module
+from picture.module import Picture
 
 class Factory(object):
     def __init__(self):
         pass
 
     def version(self):
-        return module.__version__
+        return __version__
 
     def get(self):
-        return module.Picture()
+        return Picture()
 
 
 NAME = "stve.picture"

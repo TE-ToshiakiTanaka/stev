@@ -7,6 +7,7 @@ machine:
     environment:
         ANDROID_HOME: /usr/local/android-sdk-linux
         TOX_PY27: '2.7.10'
+        ANDROID_HOME: /usr/local/android-sdk-linux
 
 dependencies:
     pre:
@@ -15,6 +16,13 @@ dependencies:
         - pip install -U ipdb
         - pip install -U -r requirements.txt
         - pyenv local $TOX_PY27
+        - echo y | android update sdk --no-ui --all --filter "tool"
+        - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
+        - echo y | android update sdk --no-ui --all --filter "extra-android-support"
+        - echo y | android update sdk --no-ui --all --filter "extra-google-google_play_services"
+        - echo y | android update sdk --no-ui --all --filter "extra-google-m2repository"
+        - echo y | android update sdk --no-ui --all --filter "android-23"
+        - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
 
     override:
         - echo y | android update sdk --no-ui --filter "android-21,build-tools-21.1.2"
@@ -22,6 +30,11 @@ dependencies:
 
 test:
     override:
+        - emulator -avd circleci-android21 -no-audio -no-window:
+            background: true
+            parallel: true
+        - circle-android wait-for-boot
+        - adb devices
         - tox -v
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/
