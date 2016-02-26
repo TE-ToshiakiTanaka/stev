@@ -68,6 +68,7 @@ opencv-2.4.11
 # APK
 .gradle
 stve/library/android/apk/*/local.properties
+stve/library/android/apk/*/gradle.properties
 stve/library/android/apk/*/.idea/workspace.xml
 stve/library/android/apk/*/.idea/libraries
 stve/library/android/apk/*/.DS_Store
@@ -83,6 +84,7 @@ stve/library/*.class
 # stve/library/android/jar/*/bin/
 stve/library/android/jar/*/gen/
 stve/library/android/jar/*/local.properties
+stve/library/android/jar/*/gradle.properties
 stve/library/android/jar/*/.classpath
 stve/library/android/jar/*/.project
 stve/library/android/jar/*/proguard/
