@@ -37,7 +37,7 @@ public class RunnableTaskExecutor implements IRunnableTaskExecutor {
 
     @Override
     public final synchronized void execute() throws IllegalThreadStateException {
-        if (mWorkerThread.isAlive()) {
+        if (!mWorkerThread.isAlive()) {
             throw new IllegalThreadStateException(
                     "Can not execute because underlaying thread is dead");
         }

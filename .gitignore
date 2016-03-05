@@ -77,7 +77,7 @@ stve/library/android/apk/*/build
 stve/library/android/apk/*/captures
 
 # JAR
-stve/library/*.apk
+# stve/library/*.apk
 stve/library/*.ap_
 stve/library/*.dex
 stve/library/*.class
