@@ -63,12 +63,18 @@ class AndroidBase(object):
         return self.profile
 
     def __exec(self, cmd, timeout=TIMEOUT):
+        L.debug(cmd)
         result = run(cmd, timeout=timeout)
         if result != None:
             try:
-                result = result[1].decode("utf-8")
+                if result[0] == 0:
+                    result = result[1].replace("\r", "")
+                else:
+                    L.warning(result[2].replace("\r",""))
+                    raise AndroidError("Android Execute Failed.")
             except Exception as e:
                 L.warning(str(e))
+                raise e
         return result
 
     def _target(self):
@@ -179,20 +185,31 @@ class AndroidApplication(object):
         if os.name =='nt': result = run("gradlew.bat assembleRelease")
         else: result = run("gradlew assembleRelease")
 
+        if result[0] == 0:
+            L.info(result[1].replace("\n",""))
+        else:
+            L.warning(result[2].replace("\n",""))
+            raise AndroidError("Android Utility Re-cycle Application Build Failed.")
+
     def install(self):
         path = os.path.join(ADB_APK_AURA, "app", "build", "outputs", "apk", "app-release.apk")
-        L.info(path)
         if os.path.exists(path):
-            L.info(self._adb.install(path, timeout=600))
+            result = self._adb.install(path, timeout=600)
+            L.info(result); return result
+        else:
+            raise AndroidError("Android Utility Re-cycle Application Not Exists. %s " % path)
+
 
     def uninstall(self):
-        L.info(self._adb.uninstall(self._adb.get().AURA_PACKAGE))
+        result = self._adb.uninstall(self._adb.get().AURA_PACKAGE)
+        L.info(result); return result
 
     def execute(self, command, bundle):
         arg = ""
         for k, v in bundle.items():
             args += " -e %s %s" % (k, v)
-        return self._adb.shell("am startservice -a %s %s" % (command, arg))
+        result = self._adb.shell("am startservice -a %s %s" % (command, arg))
+        L.info(result); return result
 
 class AndroidUiAutomator(object):
     """
@@ -210,17 +227,19 @@ class AndroidUiAutomator(object):
             L.info(result[1].replace("\n",""))
         else:
             L.warning(result[2].replace("\n",""))
-            raise AndroidError("Android UiAutomator Build Failed.")
+            raise AndroidError("Android UiAutomator Binary for Stve Build Failed.")
 
     def push(self, jar):
-        self._adb.push(jar, UIAUTOMATOR_PATH)
+        result = self._adb.push(jar, UIAUTOMATOR_PATH)
+        return result
 
     def execute(self, jar, exe, bundle, timeout=UIAUTOMATOR_TIMEOUT):
         arg = ""
         for k, v in bundle.items():
             arg += " -e %s \"%s\"" %(k, v)
         cmd = "uiautomator runtest %s -c %s %s" % (jar, exe, arg)
-        return self._adb.shell(cmd, timeout)
+        result = self._adb.shell(cmd, timeout)
+        L.info(result); return result
 
 class Android(object):
     def __init__(self, profile, host=PROFILE_PATH):
@@ -228,10 +247,10 @@ class Android(object):
         self._uiautomator = AndroidUiAutomator(self._adb)
         self._application = AndroidApplication(self._adb)
 
-        #L.info(self._uiautomator.build())
-        L.info(self.push_uiautomator())
+        # L.info(self._uiautomator.build())
+        self.push_uiautomator()
 
-        #L.info(self._application.release())
+        # L.info(self._application.release())
         self.install_application()
 
         self.exec_uiautomator(self.get().JAR_AUBS, self.get().AUBS_SYSTEM_ALLOWAPP, {})

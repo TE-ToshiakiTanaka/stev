@@ -92,6 +92,9 @@ stve/library/android/jar/*/proguard/
 *.iml
 *.ipr
 *.iws
+*.class
+*.dex
+*.dex.d
 stve/library/android/jar/*/.idea/workspace.xml
 stve/library/android/jar/*/.idea/tasks.xml
 stve/library/android/jar/*/.idea/libraries/
