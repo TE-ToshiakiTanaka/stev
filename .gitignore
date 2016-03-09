@@ -72,12 +72,10 @@ stve/library/android/apk/*/gradle.properties
 stve/library/android/apk/*/.idea/workspace.xml
 stve/library/android/apk/*/.idea/libraries
 stve/library/android/apk/*/.DS_Store
-# stve/library/android/apk/*/app
 # stve/library/android/apk/*/build
 stve/library/android/apk/*/captures
 
 # JAR
-# stve/library/*.apk
 stve/library/*.ap_
 stve/library/*.dex
 stve/library/*.class
