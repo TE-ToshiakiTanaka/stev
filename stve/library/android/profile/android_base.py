@@ -24,11 +24,11 @@ class Android:
     # UiAutomator Jar : Default LASCALL
     JAR_AUBS = "aubs.jar"
 
-    # Lascall Method
+    # AUBS Method
     AUBS = "jp.setsulla.stve.aubs.Aubs"
 
-    # 3rd Party APK
-    SIRON = "Siron.apk"
-    SIRON_PACKAGE = "com.sony.ste.siron"
+    AUBS_SYSTEM_ALLOWAPP = "jp.setsulla.stve.aubs.system.AndroidTest#testAllowSettingsApp"
 
-    # Siron Method
+    # AURA Service
+    AURA_PACKAGE = "jp.setsulla.stve.aura"
+    AURA_DEBUGON = "jp.setsulla.stve.aura.DEBUG_ON"

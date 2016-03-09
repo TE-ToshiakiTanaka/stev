@@ -183,7 +183,16 @@ class AndroidApplication(object):
         path = os.path.join(ADB_APK_AURA, "app", "build", "outputs", "apk", "app-release.apk")
         L.info(path)
         if os.path.exists(path):
-            L.info(self._adb.install(path, timeout=10))
+            L.info(self._adb.install(path, timeout=600))
+
+    def uninstall(self):
+        L.info(self._adb.uninstall(self._adb.get().AURA_PACKAGE))
+
+    def execute(self, command, bundle):
+        arg = ""
+        for k, v in bundle.items():
+            args += " -e %s %s" % (k, v)
+        return self._adb.shell("am startservice -a %s %s" % (command, arg))
 
 class AndroidUiAutomator(object):
     """
@@ -223,10 +232,18 @@ class Android(object):
         L.info(self.push_uiautomator())
 
         #L.info(self._application.release())
-        self._application.install()
+        self.install_application()
+
+        self.exec_uiautomator(self.get().JAR_AUBS, self.get().AUBS_SYSTEM_ALLOWAPP, {})
 
     def get(self):
         return self._adb.get_profile()
+
+    def install_application(self):
+        self._application.install()
+
+    def exec_application(self, command, bundle):
+        self._application.execute(command, bundle)
 
     def push_uiautomator(self, jar=""):
         """
@@ -249,5 +266,6 @@ class Android(object):
         return self._uiautomator.execute(jar, exe, bundle)
 
 if __name__ == '__main__':
-    a = Android("38721d016004334")
+    a = Android("YT9111NUXX")
     print a.get().SERIAL
+    print a.exec_application(a.get().AURA_DEBUGON, {})
