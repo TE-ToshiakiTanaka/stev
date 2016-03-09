@@ -180,7 +180,7 @@ class AndroidApplication(object):
         else: result = run("gradlew assembleRelease")
 
     def install(self):
-        path = os.path.join(utility.ADB_APK_AURA, "app", "build", "outputs", "apk", "app-release.apk")
+        path = os.path.join(ADB_APK_AURA, "app", "build", "outputs", "apk", "app-release.apk")
         L.info(path)
         if os.path.exists(path):
             L.info(self._adb.install(path, timeout=10))
