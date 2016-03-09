@@ -14,6 +14,11 @@ class TestAndroidTestRuner(TSTR):
         self.base_library_execute_success("library_android_02.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
-    def test_library_execute_picture_success_08(self):
+    def test_library_execute_picture_success_03(self):
         StveTestCase.set("android.serial", "emulator-5554")
         self.base_library_execute_success("library_android_03.py")
+
+    @with_setup(TSTR.setup, TSTR.teardown)
+    def test_library_execute_picture_success_04(self):
+        StveTestCase.set("android.serial", "emulator-5554")
+        self.base_library_execute_success("library_android_04.py")
