@@ -74,6 +74,10 @@ stve/library/android/apk/*/.idea/libraries
 stve/library/android/apk/*/.DS_Store
 # stve/library/android/apk/*/build
 stve/library/android/apk/*/captures
+stve/library/android/apk/*/.idea/workspace.xml
+stve/library/android/apk/*/.idea/tasks.xml
+stve/library/android/apk/*/.idea/libraries/
+stve/library/android/apk/*/.gradle
 
 # JAR
 stve/library/*.ap_
