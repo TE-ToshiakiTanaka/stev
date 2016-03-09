@@ -18,6 +18,7 @@ UIAUTOMATOR_TIMEOUT = 180
 UIAUTOMATOR_PATH = "/data/local/tmp/"
 
 ADB_ROOT = os.path.normpath(os.path.dirname(__file__))
+ADB_APK_AURA = os.path.join(ADB_ROOT, "apk", "aura")
 ADB_JAR_AUBS = os.path.join(ADB_ROOT, "jar", "aubs")
 
 L = Log("Android.Library.STVE")
@@ -166,6 +167,24 @@ class AndroidBase(object):
     def wait(self, timeout=TIMEOUT):
         return self.adb("wait-for-device", timeout)
 
+class AndroidApplication(object):
+    """
+        This class is not Interface of Android Module.
+    """
+    def __init__(self, adb):
+        self._adb = adb
+
+    def release(self):
+        os.chdir(ADB_APK_AURA)
+        if os.name =='nt': result = run("gradlew.bat assembleRelease")
+        else: result = run("gradlew assembleRelease")
+
+    def install(self):
+        path = os.path.join(utility.ADB_APK_AURA, "app", "build", "outputs", "apk", "app-release.apk")
+        L.info(path)
+        if os.path.exists(path):
+            L.info(self._adb.install(path, timeout=10))
+
 class AndroidUiAutomator(object):
     """
         This class is not Interface of Android Module.
@@ -198,9 +217,13 @@ class Android(object):
     def __init__(self, profile, host=PROFILE_PATH):
         self._adb = AndroidBase(profile, host)
         self._uiautomator = AndroidUiAutomator(self._adb)
+        self._application = AndroidApplication(self._adb)
 
         #L.info(self._uiautomator.build())
         L.info(self.push_uiautomator())
+
+        #L.info(self._application.release())
+        self._application.install()
 
     def get(self):
         return self._adb.get_profile()
