@@ -20,5 +20,5 @@ class Factory(object):
         return Selenium()
 
 
-NAME = "stve.picture"
+NAME = "stve.browser"
 FACTORY = Factory()

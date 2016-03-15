@@ -121,3 +121,11 @@ class AndroidError(StveError):
                 'message' : details
             }
         StveError.__init__(self, details)
+
+class SeleniumError(StveError):
+    def __init__(self, details):
+        if type(details) in [str, unicode]:
+            details = {
+                'message' : details
+            }
+        StveError.__init__(self, details)
