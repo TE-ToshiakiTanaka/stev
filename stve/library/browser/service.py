@@ -16,8 +16,8 @@ class Factory(object):
     def version(self):
         return __version__
 
-    def get(self):
-        return Selenium()
+    def get(self, mode="Chrome"):
+        return Selenium(mode)
 
 
 NAME = "stve.browser"

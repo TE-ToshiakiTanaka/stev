@@ -16,7 +16,7 @@ class TestCase(StveTestCase):
 
     def test(self):
         self.assertTrue("stve.browser" in self.service.keys())
-        adb = self.service["stve.browser"].get()
+        adb = self.service["stve.browser"].get("FireFox")
         self.assertTrue(adb != None)
 
     @classmethod

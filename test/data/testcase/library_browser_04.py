@@ -16,7 +16,7 @@ class TestCase(StveTestCase):
 
     def test(self):
         self.assertTrue("stve.browser" in self.service.keys())
-        b = self.service["stve.browser"].get()
+        b = self.service["stve.browser"].get("FireFox")
         self.assertTrue(b != None)
         b.start(self.get("browser.url"))
         time.sleep(10)
