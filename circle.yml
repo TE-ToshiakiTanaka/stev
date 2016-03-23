@@ -1,37 +1,37 @@
 machine:
-    java:
-        version: openjdk7
+    # java:
+    #    version: openjdk7
     python:
         version: '2.7.10'
     timezone: Asia/Tokyo
     environment:
-        ANDROID_HOME: /usr/local/android-sdk-linux
+        # ANDROID_HOME: /usr/local/android-sdk-linux
         TOX_PY27: '2.7.10'
 
 dependencies:
     pre:
-        - ./opencv_install.sh
+        # - ./opencv_install.sh
         - pip -V
         - pip install -U ipdb
         - pip install -U -r requirements.txt
         - pyenv local $TOX_PY27
-        - echo y | android update sdk --no-ui --all --filter "tool"
+        # - echo y | android update sdk --no-ui --all --filter "tool"
         # - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
         # - echo y | android update sdk --no-ui --all --filter "extra-android-support"
         # - echo y | android update sdk --no-ui --all --filter "extra-google-google_play_services"
         # - echo y | android update sdk --no-ui --all --filter "extra-google-m2repository"
-        - echo y | android update sdk --no-ui --all --filter "android-23"
+        # - echo y | android update sdk --no-ui --all --filter "android-23"
         # - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
-        - echo n | android create avd --force --name emulator-android-23 --target android-23 -c 50M
+        # - echo n | android create avd --force --name emulator-android-23 --target android-23 -c 50M
 
 
 test:
     override:
-        - emulator -avd emulator-android-23 -no-audio -no-window:
-            background: true
-            parallel: true
-        - circle-android wait-for-boot
-        - adb devices
+        # - emulator -avd emulator-android-23 -no-audio -no-window:
+        #     background: true
+        #     parallel: true
+        # - circle-android wait-for-boot
+        # - adb devices
         - tox -v
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/

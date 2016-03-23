@@ -13,5 +13,5 @@ class Factory(object):
         return True
 
 
-NAME = "core"
+NAME = "stve.core"
 FACTORY = Factory()
