@@ -19,10 +19,10 @@ class TestBrowserTestRuner(TSTR):
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_browser_success_04(self):
-        StveTestCase.set("browser.url", "https:\/\/www.google.co.jp")
+        StveTestCase.set("browser.url", u'https://www.google.com/')
         self.base_library_execute_success("library_browser_04.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_browser_success_05(self):
-        StveTestCase.set("browser.url", "https:\/\/www.google.co.jp")
+        StveTestCase.set("browser.url", u'https://www.google.com/')
         self.base_library_execute_success("library_browser_05.py")
