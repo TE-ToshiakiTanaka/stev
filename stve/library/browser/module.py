@@ -1,6 +1,7 @@
 import sys
 import os
 import time
+import platform
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -31,9 +32,12 @@ class Selenium(object):
         if cls.mode == "FireFox":
             cls.driver = webdriver.Firefox()
         elif cls.mode == "Chrome":
-            chromedriver = os.path.join(DRIVER_PATH, "chromedriver.exe")
-            os.environ["webdriver.chrome.driver"] = chromedriver
-            cls.driver = webdriver.Chrome(chromedriver)
+            if platform.system() == 'Windows':
+                chromedriver = os.path.join(DRIVER_PATH, "chromedriver.exe")
+                os.environ["webdriver.chrome.driver"] = chromedriver
+                cls.driver = webdriver.Chrome(chromedriver)
+            else:
+                cls.driver = webdriver.Chrome()
         else:
             raise SeleniumError(
                 "Can't find Selenium Driver Mode. %s" % cls.mode)
