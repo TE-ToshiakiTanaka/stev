@@ -53,6 +53,8 @@ class Selenium(object):
             cls._click_class(element, x, y)
         elif by == "id":
             cls._click_id(element, x, y)
+        elif by == "name":
+            cls._click_name(element, x, y)
         else:
             raise SeleniumError(
                 "Can't find Selenum Target type. %s " % element)
@@ -66,13 +68,20 @@ class Selenium(object):
             raise SeleniumError(str(e))
 
     @classmethod
+    def find_element_by_name(cls, element):
+        try:
+            return cls.driver.find_element_by_name(element)
+        except Exception as e:
+            L.warning(str(e))
+            raise SeleniumError(str(e))
+
+    @classmethod
     def find_element_by_class(cls, element):
         try:
             return cls.driver.find_element_by_class_name(element)
         except Exception as e:
             L.warning(str(e))
             raise SeleniumError(str(e))
-
 
     @classmethod
     def _click_id(cls, element, x, y):
@@ -82,6 +91,11 @@ class Selenium(object):
     @classmethod
     def _click_class(cls, element, x, y):
         target = cls.find_element_by_class(element)
+        cls.__click_cordinate(target, x, y)
+
+    @classmethod
+    def _click_name(cls, element, x, y):
+        target = cls.find_element_by_name(element)
         cls.__click_cordinate(target, x, y)
 
     @classmethod

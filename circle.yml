@@ -10,7 +10,7 @@ machine:
 
 dependencies:
     pre:
-        # - ./opencv_install.sh
+        - ./opencv_install.sh
         - pip -V
         - pip install -U ipdb
         - pip install -U -r requirements.txt
