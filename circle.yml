@@ -10,6 +10,7 @@ machine:
 
 dependencies:
     pre:
+        - chmod -x ./*.sh
         - ./opencv_install.sh
         - pip -V
         - pip install -U ipdb
