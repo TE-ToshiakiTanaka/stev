@@ -14,15 +14,15 @@ class TestBrowserTestRuner(TSTR):
         self.base_library_execute_success("library_browser_02.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
-    def test_library_execute_picture_success_03(self):
+    def test_library_execute_borwser_success_03(self):
         self.base_library_execute_success("library_browser_03.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
-    def test_library_execute_picture_success_04(self):
+    def test_library_execute_borwser_success_04(self):
         StveTestCase.set("browser.url", "https:\/\/www.google.co.jp")
         self.base_library_execute_success("library_browser_04.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
-    def test_library_execute_picture_success_05(self):
+    def test_library_execute_borwser_success_05(self):
         StveTestCase.set("browser.url", "https:\/\/www.google.co.jp")
         self.base_library_execute_success("library_browser_05.py")
