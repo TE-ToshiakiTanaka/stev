@@ -18,9 +18,9 @@ L = Log("Browser.Library.STVE")
 
 class Selenium(object):
     driver = None
-    mode = "Chrome"
+    mode = "FireFox"
 
-    def __init__(self, mode="Chrome"):
+    def __init__(self, mode="FireFox"):
         self.__mode(mode)
 
     @classmethod
@@ -28,16 +28,22 @@ class Selenium(object):
         cls.mode = mode
 
     @classmethod
-    def start(cls, url):
+    def start(cls, url, driver=""):
         if cls.mode == "FireFox":
             cls.driver = webdriver.Firefox()
         elif cls.mode == "Chrome":
-            if platform.system() == 'Windows':
-                chromedriver = os.path.join(DRIVER_PATH, "chromedriver.exe")
-                os.environ["webdriver.chrome.driver"] = chromedriver
-                cls.driver = webdriver.Chrome(chromedriver)
-            else:
-                cls.driver = webdriver.Chrome()
+            try:
+                if driver != "":
+                    chromedriver = driver
+                    L.info(chromedriver)
+                    os.environ["webdriver.chrome.driver"] = chromedriver
+                    cls.driver = webdriver.Chrome(chromedriver)
+                else:
+                    cls.driver = webdriver.Chrome()
+            except Exception as e:
+                L.warning(str(e))
+                raise SeleniumError(
+                    "Can't find Selenium Driver Mode. %s" % cls.mode)
         else:
             raise SeleniumError(
                 "Can't find Selenium Driver Mode. %s" % cls.mode)

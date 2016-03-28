@@ -16,7 +16,7 @@ class Factory(object):
     def version(self):
         return __version__
 
-    def get(self, mode="Chrome"):
+    def get(self, mode="FireFox"):
         return Selenium(mode)
 
 
