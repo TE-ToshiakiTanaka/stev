@@ -25,7 +25,8 @@ class TestCase(StveTestCase):
             time.sleep(5)
             self.assertTrue(b.find_element_by_id("logo") != None)
         finally:
-            b.quit()
+            if b != None:
+                b.quit()
 
     @classmethod
     def tearDownClass(cls):

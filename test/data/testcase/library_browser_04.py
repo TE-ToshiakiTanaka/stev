@@ -22,7 +22,8 @@ class TestCase(StveTestCase):
             b.start(self.get("browser.url"))
             self.assertTrue(b.find_element_by_id("hplogo") != None)
         finally:
-            b.quit()
+            if b != None:
+                b.quit()
 
     @classmethod
     def tearDownClass(cls):
