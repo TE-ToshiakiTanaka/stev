@@ -11,6 +11,7 @@ machine:
 dependencies:
     pre:
         - /bin/bash opencv_install.sh
+        - sudo apt-get install xvfb
         - pip -V
         - pip install -U ipdb
         - pip install -U -r requirements.txt
@@ -32,6 +33,8 @@ test:
         #     parallel: true
         # - circle-android wait-for-boot
         # - adb devices
+        - sudo Xvfb :10 -ac
+        - export DISPLAY=:10
         - tox -v
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/
