@@ -44,9 +44,9 @@ class Log(object):
         self.logger = logging.getLogger(name)
         self.logger.setLevel(level)
         self.shell = shell
-        self.__addHandler(self.consoleHandler(format, level))
+        self.addHandler(self.consoleHandler(format, level))
 
-    def __addHandler(self, handler):
+    def addHandler(self, handler):
         self.logger.addHandler(handler)
 
     def consoleHandler(self, format, level):
@@ -54,6 +54,15 @@ class Log(object):
         h = logging.StreamHandler()
         h.setLevel(level)
         h.setFormatter(f)
+        return h
+
+    def fileHandler(self, filename, format, level):
+        if not os.path.exists(filename):
+            raise LogError("Log file '%s' is not found." % filename)
+        fo = logging.Formatter(format)
+        h = logging.FileHandler(filename, 'a+')
+        h.setLevel(level)
+        h.setFormatter(fo)
         return h
 
     def traceback(self, level=logging.CRITICAL):
