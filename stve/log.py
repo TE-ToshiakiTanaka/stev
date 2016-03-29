@@ -49,6 +49,7 @@ class Log(object):
     def addHandler(self, handler):
         self.logger.addHandler(handler)
 
+    @classmethod
     def consoleHandler(self, format, level):
         f = logging.Formatter(format)
         h = logging.StreamHandler()
@@ -56,6 +57,7 @@ class Log(object):
         h.setFormatter(f)
         return h
 
+    @classmethod
     def fileHandler(self, filename, format, level):
         if not os.path.exists(filename):
             raise LogError("Log file '%s' is not found." % filename)
