@@ -27,13 +27,14 @@ dependencies:
 
 test:
     override:
-        # - emulator -avd emulator-android-23 -no-audio -no-window:
+        #- emulator -avd emulator-android-23 -no-audio -no-window:
         #     background: true
         #     parallel: true
         # - circle-android wait-for-boot
         # - adb devices
         - tox -v:
             background: true
+        - sleep 5
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/
         - mv nosetests.xml $CIRCLE_TEST_REPORTS/nose/
