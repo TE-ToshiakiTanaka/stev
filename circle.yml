@@ -33,7 +33,7 @@ test:
         #     parallel: true
         # - circle-android wait-for-boot
         # - adb devices
-        - sudo Xvfb :10 -ac
+        - sudo Xvfb :10 -ac &
         - export DISPLAY=:10
         - tox -v
     post:
