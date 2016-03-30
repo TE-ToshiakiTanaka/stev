@@ -23,13 +23,6 @@ dependencies:
         # - echo y | android update sdk --no-ui --all --filter "android-23"
         # - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
         # - echo n | android create avd --force --name emulator-android-23 --target android-23 -c 50M
-    post:
-        - Xvfb :99 -screen 0 1280x800x24 2>&1 >/dev/null &
-        - echo $DISPLAY
-        - wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
-        - java -jar selenium-server-standalone-2.53.0.jar:
-            background: true
-
 
 test:
     override:
@@ -38,7 +31,7 @@ test:
         #     parallel: true
         # - circle-android wait-for-boot
         # - adb devices
-        - tox -v
+        - xvfb-run tox -v
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/
         - mv nosetests.xml $CIRCLE_TEST_REPORTS/nose/
