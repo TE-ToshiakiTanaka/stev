@@ -24,6 +24,7 @@ dependencies:
         # - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
         # - echo n | android create avd --force --name emulator-android-23 --target android-23 -c 50M
     post:
+        - Xvfb :99 -screen 0 1280x800x24 2>&1 >/dev/null &
         - wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
         - java -jar selenium-server-standalone-2.53.0.jar:
             background: true
