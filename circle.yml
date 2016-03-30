@@ -31,7 +31,7 @@ test:
         #     parallel: true
         # - circle-android wait-for-boot
         # - adb devices
-        - xvfb-run tox -v
+        - tox -v
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/
         - mv nosetests.xml $CIRCLE_TEST_REPORTS/nose/
