@@ -120,6 +120,10 @@ class Selenium(object):
         actions.perform()
 
     @classmethod
+    def refresh(cls):
+        cls.driver.navigate().refresh()
+
+    @classmethod
     def quit(cls):
         cls.driver.quit()
 
