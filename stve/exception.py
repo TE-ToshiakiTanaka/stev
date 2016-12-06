@@ -1,6 +1,8 @@
 import sys
 import traceback
 
+from stve import STRING_SET
+
 class StveError(Exception):
     details = None # {<string>:<base type>, ... }
 
@@ -8,7 +10,7 @@ class StveError(Exception):
         if not type(details) == dict:
             raise Exception('StveError : details must be a dictionary')
         for key in details:
-            if type(key) not in [str, unicode]:
+            if type(key) not in STRING_SET:
                 raise Exception('StveError : details key must be strings')
         if 'message' not in details:
             raise Exception('StveError : details must have mesage field')
@@ -52,7 +54,7 @@ class StveError(Exception):
 
 class TimeoutError(StveError):
     def __init__(self, details):
-        if type(details) in [str, unicode]:
+        if type(details) in STRING_SET:
             details = {
                 'message': details
             }
@@ -75,7 +77,7 @@ class RunError(StveError):
 
 class LogError(StveError):
     def __init__(self, details):
-        if type(details) in [str, unicode]:
+        if type(details) in STRING_SET:
             details = {
                 'message': details
             }
@@ -83,7 +85,7 @@ class LogError(StveError):
 
 class WorkspaceError(StveError):
     def __init__(self, details):
-        if type(details) in [str, unicode]:
+        if type(details) in STRING_SET:
             details = {
                 'message': details
             }
@@ -92,7 +94,7 @@ class WorkspaceError(StveError):
 
 class TestRunnerError(StveError):
     def __init__(self, details):
-        if type(details) in [str, unicode]:
+        if type(details) in STRING_SET:
             details = {
                 'message': details
             }
@@ -100,7 +102,7 @@ class TestRunnerError(StveError):
 
 class LibraryError(StveError):
     def __init__(self, details):
-        if type(details) in [str, unicode]:
+        if type(details) in STRING_SET:
             details = {
                 'message' : details
             }
@@ -108,7 +110,7 @@ class LibraryError(StveError):
 
 class PictureError(StveError):
     def __init__(self, details):
-        if type(details) in [str, unicode]:
+        if type(details) in STRING_SET:
             details = {
                 'message' : details
             }
@@ -116,7 +118,7 @@ class PictureError(StveError):
 
 class AndroidError(StveError):
     def __init__(self, details):
-        if type(details) in [str, unicode]:
+        if type(details) in STRING_SET:
             details = {
                 'message' : details
             }
@@ -124,7 +126,7 @@ class AndroidError(StveError):
 
 class SeleniumError(StveError):
     def __init__(self, details):
-        if type(details) in [str, unicode]:
+        if type(details) in STRING_SET:
             details = {
                 'message' : details
             }
