@@ -4,12 +4,13 @@ import shutil
 import tempfile
 import datetime
 
+from stve import STRING_SET
 from stve.exception import *
 from stve.log import LOG as L
 
 class Workspace(object):
     def __init__(self, path, clear=False):
-        if not type(path) in [str, unicode]:
+        if not type(path) in STRING_SET:
             raise WorkspaceError("path must be strings.")
         self.default_path = os.path.abspath(path)
         if os.path.exists(path):
@@ -36,7 +37,7 @@ class Workspace(object):
         return self.default_path
 
     def mkdir(self, folder, host="", clear=False):
-        if not type(folder) in [str, unicode]:
+        if not type(folder) in STRING_SET:
             raise WorkspaceError("folder must be strings.")
         if host == "":
             path = os.path.join(self.root(), folder)
@@ -59,7 +60,7 @@ class Workspace(object):
         return path
 
     def rmdir(self, folder, host=""):
-        if not type(folder) in [str, unicode]:
+        if not type(folder) in STRING_SET:
             raise WorkspaceError("folder must be strings.")
 
         if host == "":
@@ -81,7 +82,7 @@ class Workspace(object):
                 raise WorkspaceError("Can't remove file %s. Please Check File Permission." % path)
 
     def touch(self, filename, host=""):
-        if not type(filename) in [str, unicode]:
+        if not type(filename) in STRING_SET:
             raise WorkspaceError("filename must be strings.")
 
         if host == "":
@@ -102,7 +103,7 @@ class Workspace(object):
         return self.touch(dstr, host=host)
 
     def rm(self, filepath):
-        if not type(filepath) in [str, unicode]:
+        if not type(filepath) in STRING_SET:
             raise WorkspaceError("filepath must be strings.")
         if not os.path.exists(filepath):
             L.warning("it is not exists %s" % filepath)
