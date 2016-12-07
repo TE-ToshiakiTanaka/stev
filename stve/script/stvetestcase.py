@@ -1,15 +1,15 @@
 import os
 import sys
-import imp
 import time
 import unittest
 import argparse
+import importlib
+import traceback
 
 from stve.log import LOG as L
+from stve.define import *
 from stve.exception import *
 
-SYSTEM_LIBRARY = os.path.normpath(os.path.join(
-    os.path.dirname(os.path.dirname(__file__)), "library"))
 
 class StveTestCase(unittest.TestCase):
     config = {}
@@ -18,25 +18,24 @@ class StveTestCase(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         global service
         super(StveTestCase, self).__init__(*args, **kwargs)
-        self.register(SYSTEM_LIBRARY)
+        self.register(STVE_LIB)
         self.__parse()
 
     @classmethod
     def register(cls, host):
         if not os.path.exists(host):
             raise LibraryError("%s is not exists." % (host))
+        sys.path.append(host)
         for fdn in os.listdir(host):
             try:
-                if fdn.endswith(".pyc") or fdn.endswith(".py"):
-                    pass
+                if fdn.endswith(".pyc") or fdn.endswith(".py"): pass
+                elif fdn.endswith("__pycache__"): pass
                 else:
-                    sys.path.append(os.path.join(host, fdn))
-                    f, n, d = imp.find_module("service")
-                    module = imp.load_module("service", f, n, d)
+                    module = importlib.import_module("%s.service" % fdn)
                     cls.service[module.NAME] = module.FACTORY
-                    sys.path.remove(os.path.join(host, fdn))
             except Exception as e:
-                L.warning(str(e))
+                L.warning(traceback.print_exc())
+                L.warning(type(e).__name__ + ": " + str(e))
 
     @classmethod
     def set(cls, name, value):
@@ -59,7 +58,6 @@ class StveTestCase(unittest.TestCase):
         parser.add_argument(action='store', dest="testcase",
                             help='TestCase Name.')
         return parser
-
 
     @classmethod
     def get_service(cls, settings):

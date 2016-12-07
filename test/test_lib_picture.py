@@ -1,7 +1,13 @@
 import os
+import sys
 from stve.script import StveTestCase
-from runner import TestStveTestRunner as TSTR
 from nose.tools import with_setup, raises, ok_, eq_
+
+LIB_PATH = os.path.dirname(os.path.abspath(__file__))
+if not LIB_PATH in sys.path:
+    sys.path.insert(0, LIB_PATH)
+
+from runner import TestStveTestRunner as TSTR
 
 class TestPictureTestRuner(TSTR):
 

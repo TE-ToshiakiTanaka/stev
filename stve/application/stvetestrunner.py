@@ -1,9 +1,10 @@
 import os
 import sys
-import imp
 import csv
 import unittest
+import importlib
 import xmlrunner
+import traceback
 
 from stve.log import LOG as L
 from stve.exception import *
@@ -24,12 +25,12 @@ class StveTestRunner(object):
         L.debug("TestCase : %s" % path)
         try:
             if os.path.exists(path):
-                f, n, d = imp.find_module(str(name))
-                return imp.load_module(name, f, n, d)
+                return importlib.import_module(name)
             else:
                 return False
         except ImportError as e:
-            L.traceback()
+            L.warning(traceback.print_exc())
+            L.warning(type(e).__name__ + ": " + str(e))
             return False
 
     def execute(self, script, host, v=2):
@@ -40,11 +41,13 @@ class StveTestRunner(object):
         suite = unittest.TestSuite()
         loader = unittest.TestLoader()
         module = self.load(script, host)
+        L.debug("Module Name : " + str(module))
         if not module:
             L.warning("Not loaded module : %s" % script)
             raise TestRunnerError("%s is not extended StveTestCase." % script)
         else: suite.addTest(loader.loadTestsFromModule(module))
         unittest.TextTestRunner(verbosity=v).run(suite)
+        sys.path.remove(host)
 
     def execute_with_report(self, script, host, output):
         if not os.path.exists(host):
@@ -62,3 +65,4 @@ class StveTestRunner(object):
             raise TestRunnerError("%s is not extended StveTestCase." % script)
         else: suite.addTest(loader.loadTestsFromModule(module))
         xmlrunner.XMLTestRunner(output=output).run(suite)
+        sys.path.remove(host)
