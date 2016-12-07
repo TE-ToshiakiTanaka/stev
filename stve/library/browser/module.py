@@ -2,8 +2,12 @@ import sys
 import os
 import time
 import platform
-from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
+
+try:
+    from selenium import webdriver
+    from selenium.webdriver.common.action_chains import ActionChains
+except Exception as e:
+    print(str(e))
 
 DRIVER_PATH = os.path.abspath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "driver"))
