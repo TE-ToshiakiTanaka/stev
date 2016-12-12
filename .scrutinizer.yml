@@ -1,3 +1,16 @@
+build:
+    dependencies:
+        before:
+            - pip install -r requirements-core.txt
+    tests:
+        override:
+            -
+                command: ./nosetests -v -e=*_lib_* --with-xunit --with-coverage --cover-erase --cover-package=stve
+                coverage:
+                    file: .coverage
+                    config: .coveragerc
+                    format: py-cc
+
 checks:
     php:
         code_rating: true
