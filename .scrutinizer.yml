@@ -10,6 +10,9 @@ build:
                     file: .coverage
                     config: .coveragerc
                     format: py-cc
+filter:
+    excluded_paths:
+        - test/*
 
 checks:
     php:
