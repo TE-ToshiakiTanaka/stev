@@ -1,0 +1,10 @@
+hash: 78d281ef1ebee7827882642badd9fc0df3e0cefc5f0278b96c51dc85811adf15
+updated: 2016-12-14T18:09:14.6543579+09:00
+imports:
+- name: github.com/revel/cmd
+  version: 4b9e74e1eaf41d1041de57ce613aa03aa17232e2
+  subpackages:
+  - revel
+- name: github.com/revel/revel
+  version: 8d01a054f6bca9430b3e497fe7b4f20ec8f054ce
+testImports: []

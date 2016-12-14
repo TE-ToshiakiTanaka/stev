@@ -1,43 +1,68 @@
 from __future__ import print_function
 import sys
 import os
-from multiprocessing import Process
+import time
+import signal
+import logging
 
-import tornado.ioloop
 import tornado.httpserver
+import tornado.ioloop
+import tornado.options
 import tornado.web
 
-from stve.define import *
+from tornado.options import define, options
+
+define("port", default=8888, help="run on the given port", type=int)
+
+MAX_WAIT_SECONDS_BEFORE_SHUTDOWN = 3
+
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write("Hello, World!")
+        self.write("Hello, world")
 
-class Server(object):
-    def __init__(self, port=8888):
-        self.application = tornado.web.Application(
-            [(r'.*', MainHandler), ],
-            template_path = os.path.join(STVE_SERVER, "templates"),
-            static_path = os.path.join(STVE_SERVER, "static"),
-        )
 
-        def server_thread(application, port):
-            http_server = tornado.httpserver.HTTPServer(application)
-            http_server.listen(port)
-            tornado.ioloop.IOLoop.instance().start()
+def sig_handler(sig, frame):
+    logging.warning('Caught signal: %s', sig)
+    tornado.ioloop.IOLoop.instance().add_callback(shutdown)
 
-        self.process = Process(target=server_thread,
-                                args=(self.application, port, ))
+def shutdown():
+    logging.info('Stopping http server')
+    server.stop()
 
-    def start(self):
-        self.process.start()
+    logging.info('Will shutdown in %s seconds ...', MAX_WAIT_SECONDS_BEFORE_SHUTDOWN)
+    io_loop = tornado.ioloop.IOLoop.instance()
 
-    def stop(self):
-        ioloop = tornado.ioloop.IOLoop.instance()
-        ioloop.add_callback(ioloop.stop)
+    deadline = time.time() + MAX_WAIT_SECONDS_BEFORE_SHUTDOWN
+
+    def stop_loop():
+        now = time.time()
+        if now < deadline and (io_loop._callbacks or io_loop._timeouts):
+            io_loop.add_timeout(now + 1, stop_loop)
+        else:
+            io_loop.stop()
+            logging.info('Shutdown')
+    stop_loop()
+
+
+def main():
+    tornado.options.parse_command_line()
+    application = tornado.web.Application([
+        (r"/", MainHandler),
+    ])
+
+    global server
+
+    server = tornado.httpserver.HTTPServer(application)
+    server.listen(options.port)
+
+    signal.signal(signal.SIGTERM, sig_handler)
+    signal.signal(signal.SIGINT, sig_handler)
+
+    tornado.ioloop.IOLoop.instance().start()
+
+    logging.info("Exit...")
+
 
 if __name__ == "__main__":
-    server = Server(8891)
-    server.start()
-    time.sleep(10)
-    server.stop()
+    main()
