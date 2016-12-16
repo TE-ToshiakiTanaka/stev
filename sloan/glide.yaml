@@ -1,8 +1,0 @@
-package: .
-import:
-- package: github.com/revel/revel
-  version: ^0.13.1
-- package: github.com/revel/cmd
-  version: ^0.13.1
-  subpackages:
-  - revel

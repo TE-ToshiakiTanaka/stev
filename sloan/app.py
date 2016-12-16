@@ -1,14 +1,15 @@
-from __future__ import print_function
-import sys
 import os
 import time
 import signal
 import logging
 
-import tornado.httpserver
+import uuid
 import tornado.ioloop
 import tornado.options
 import tornado.web
+import tornado.httpserver
+from tornado.options import define, options
+from tornado.web import url
 
 from tornado.options import define, options
 
@@ -16,10 +17,34 @@ define("port", default=8888, help="run on the given port", type=int)
 
 MAX_WAIT_SECONDS_BEFORE_SHUTDOWN = 3
 
-
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("Hello, world")
+
+class Application(tornado.web.Application):
+    def __init__(self, **overrides):
+        handlers = [
+            url(r"/", MainHandler, name='index'),
+        ]
+
+        settings = {
+            'static_path': os.path.join(os.path.dirname(__file__), 'static'),
+            'template_path': os.path.join(os.path.dirname(__file__), 'templates'),
+            #"cookie_secret":    base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes),
+            #'twitter_consumer_key': 'KEY',
+            #'twitter_consumer_secret': 'SECRET',
+            #'facebook_app_id': '180378538760459',
+            #'facebook_secret': '7b82b89eb6aa0d3359e2036e4d1eedf0',
+            #'facebook_registration_redirect_url': 'http://localhost:8888/facebook_login',
+            #'mandrill_key': 'KEY',
+            #'mandrill_url': 'https://mandrillapp.com/api/1.0/',
+
+            'xsrf_cookies': False,
+            'debug': True,
+            'log_file_prefix': "tornado.log",
+        }
+        tornado.web.Application.__init__(self, handlers, **settings)
+
 
 
 def sig_handler(sig, frame):
@@ -44,17 +69,14 @@ def shutdown():
             logging.info('Shutdown')
     stop_loop()
 
-
 def main():
     tornado.options.parse_command_line()
-    application = tornado.web.Application([
-        (r"/", MainHandler),
-    ])
 
     global server
 
-    server = tornado.httpserver.HTTPServer(application)
+    server = tornado.httpserver.HTTPServer(Application())
     server.listen(options.port)
+
 
     signal.signal(signal.SIGTERM, sig_handler)
     signal.signal(signal.SIGINT, sig_handler)
@@ -64,5 +86,5 @@ def main():
     logging.info("Exit...")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
