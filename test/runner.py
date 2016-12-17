@@ -17,7 +17,10 @@ class TestStveTestRunner(object):
         cls.script_path = os.path.join(cls.root, "data", "testcase")
         cls.workspace = Workspace(os.path.join(cls.root, "workspace"))
         cls.report_path = cls.workspace.mkdir("report")
-        cls.tmp_path = os.path.join(cls.root, "data", "tmp")
+        cls.tmp_path = cls.workspace.mkdir("tmp")
+        cls.data_path = os.path.join(cls.root, "data", "tmp")
+        cls.bin_path = os.path.join(cls.root, "data", "bin")
+        cls.ref_path = os.path.join(cls.root, "data", "ref")
 
     @classmethod
     def teardown(cls):

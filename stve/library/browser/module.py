@@ -5,6 +5,7 @@ import platform
 
 try:
     from selenium import webdriver
+    from selenium.webdriver import FirefoxProfile
     from selenium.webdriver.common.action_chains import ActionChains
 except Exception as e:
     print(str(e))
@@ -33,27 +34,48 @@ class Selenium(object):
 
     @classmethod
     def start(cls, url, driver=""):
-        if cls.mode == "FireFox":
-            cls.driver = webdriver.Firefox()
-        elif cls.mode == "Chrome":
-            try:
+        try:
+            if cls.mode == "FireFox":
+                geckodriver = ""
                 if driver != "":
-                    chromedriver = driver
-                    L.info(chromedriver)
-                    os.environ["webdriver.chrome.driver"] = chromedriver
-                    cls.driver = webdriver.Chrome(chromedriver)
-                else:
-                    cls.driver = webdriver.Chrome()
-            except Exception as e:
-                L.warning(str(e))
+                    geckodriver = driver
+                    L.info(geckodriver)
+                os.environ["webdriver.gecko.driver"] = geckodriver
+                default_profile = {
+                    'browser.usedOnWindows10': False,
+                    'browser.usedOnWindows10.introURL': 'https://www.google.com/',
+                    'startup.homepage_welcome_url.additional': 'about:blank',
+                    'browser.startup.homepage_override.mstone': 'ignore',
+                }
+                profile = FirefoxProfile()
+                for name, value in default_profile.items():
+                    profile.set_preference(name, value)
+                cls.driver = webdriver.Firefox(profile)
+
+            elif cls.mode == "Chrome":
+                try:
+                    if driver != "":
+                        chromedriver = driver
+                        L.info(chromedriver)
+                        os.environ["webdriver.chrome.driver"] = chromedriver
+                        cls.driver = webdriver.Chrome(chromedriver)
+                    else:
+                        raise SeleniumError("Not Set Chrome Driver Path.")
+                except Exception as e:
+                    L.debug(str(e))
+                    raise SeleniumError(
+                        "Can't find Selenium Chrome Driver.")
+            else:
                 raise SeleniumError(
                     "Can't find Selenium Driver Mode. %s" % cls.mode)
-        else:
+
+            cls.driver.implicitly_wait(DEFAULT_WAIT)
+            cls.driver.set_window_size(WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT)
+            cls.driver.get(url)
+        except Exception as e:
+            L.warning(str(e))
             raise SeleniumError(
-                "Can't find Selenium Driver Mode. %s" % cls.mode)
-        cls.driver.implicitly_wait(DEFAULT_WAIT)
-        cls.driver.set_window_size(WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT)
-        cls.driver.get(url)
+                "Can't start Selenium Driver. %s" % cls.driver)
 
     @classmethod
     def screenshot(cls, host, filename="screen.png"):
