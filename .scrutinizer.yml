@@ -1,28 +1,34 @@
 build:
+    environment:
+        python: 2.7.7
+        
     dependencies:
         before:
             - pip install -r requirements-core.txt
     tests:
         override:
-            -
-                command: ./nosetests -v -e=*_lib_* --with-xunit --with-coverage --cover-erase --cover-package=stve
-                coverage:
+            -　command: ./nosetests -v -e=*_lib_* --with-xunit --with-coverage --cover-erase --cover-package=stve
+            　 coverage:
                     file: .coverage
                     config: .coveragerc
                     format: py-cc
 filter:
     excluded_paths:
         - test/*
+        - sloan/*
+        - project/*
+        - stve/library/*
+
+tools:
+    pylint:
+        python_version: 3     # Possible values: 2, 3
+        config_file: '.pylintrc'
+
+    external_code_coverage:
+        timeout: 300   # How long should we wait for code coverage (in seconds).
+        runs: 1        # In how many runs have you split your tests?
 
 checks:
-    php:
-        code_rating: true
-        duplication: true
-
     python:
-        code_rating: true
-        duplicate_code: true
-
-    ruby:
         code_rating: true
         duplicate_code: true
