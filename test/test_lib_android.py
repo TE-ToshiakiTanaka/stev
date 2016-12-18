@@ -26,7 +26,7 @@ class TestAndroidTestRunner(TSTR):
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_android_success_03(self):
-        serial = run("adb get-serialno | grep -v daemon")[1].splitlines()[-1]
+        serial = run("adb get-serialno")[1].splitlines()[-1]
         StveTestCase.set("android.serial", serial)
         self.script_path = os.path.join(self.script_path, "android")
         self.base_library_execute_success("android_03.py")
