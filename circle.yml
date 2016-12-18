@@ -49,6 +49,7 @@ test:
              background: true
              parallel: true
         - circle-android wait-for-boot
+        - adb start-server
         - adb devices
         # - tox -v
         - /bin/bash opencv_setup.sh
