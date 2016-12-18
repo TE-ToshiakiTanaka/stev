@@ -13,6 +13,7 @@ machine:
     environment:
         # ANDROID_HOME: /usr/local/android-sdk-linux
         TOX_PY27: '2.7.10'
+        COVERALLS_REPO_TOKEN: OGUeBq6LASAI9oBXU2uBUCHGzSgFOMTsC
 
 dependencies:
     pre:
@@ -30,9 +31,7 @@ dependencies:
         - /bin/bash opencv_install.sh
 
         - pip -V
-        - pip install -U ipdb
         - pip install -U -r requirements.txt
-        - pyenv local $TOX_PY27
         # - echo y | android update sdk --no-ui --all --filter "tool"
         # - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
         # - echo y | android update sdk --no-ui --all --filter "extra-android-support"
