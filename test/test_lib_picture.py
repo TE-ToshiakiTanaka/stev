@@ -13,58 +13,70 @@ class TestPictureTestRuner(TSTR):
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_01(self):
-        self.base_library_execute_success("library_picture_01.py")
+        self.script_path = os.path.join(self.script_path, "picture")
+        self.base_library_execute_success("picture_01.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_02(self):
-        self.base_library_execute_success("library_picture_02.py")
+        self.script_path = os.path.join(self.script_path, "picture")
+        self.base_library_execute_success("picture_02.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_03(self):
-        self.base_library_execute_success("library_picture_03.py")
+        self.script_path = os.path.join(self.script_path, "picture")
+        self.base_library_execute_success("picture_03.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_04(self):
-        StveTestCase.set("system.tmp", self.tmp_path)
-        self.base_library_execute_success("library_picture_04.py")
+        self.script_path = os.path.join(self.script_path, "picture")
+        StveTestCase.set("system.tmp", self.data_path)
+        self.base_library_execute_success("picture_04.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_05(self):
-        StveTestCase.set("system.tmp", self.tmp_path)
-        self.base_library_execute_success("library_picture_05.py")
+        self.script_path = os.path.join(self.script_path, "picture")
+        StveTestCase.set("system.tmp", self.data_path)
+        self.base_library_execute_success("picture_05.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_06(self):
-        StveTestCase.set("system.tmp", self.tmp_path)
-        self.base_library_execute_success("library_picture_06.py")
+        self.script_path = os.path.join(self.script_path, "picture")
+        StveTestCase.set("system.tmp", self.data_path)
+        self.base_library_execute_success("picture_06.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_07(self):
-        StveTestCase.set("system.tmp", self.tmp_path)
-        self.base_library_execute_success("library_picture_07.py")
+        self.script_path = os.path.join(self.script_path, "picture")
+        StveTestCase.set("system.tmp", self.data_path)
+        self.base_library_execute_success("picture_07.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_08(self):
-        StveTestCase.set("system.tmp", self.tmp_path)
-        self.base_library_execute_success("library_picture_08.py")
-        self.workspace.rm(os.path.join(self.tmp_path, "test02.png"))
+        self.script_path = os.path.join(self.script_path, "picture")
+        StveTestCase.set("system.tmp", self.data_path)
+        self.base_library_execute_success("picture_08.py")
+        self.workspace.rm(os.path.join(self.data_path, "test02.png"))
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_09(self):
-        StveTestCase.set("system.tmp", self.tmp_path)
-        self.base_library_execute_success("library_picture_09.py")
+        self.script_path = os.path.join(self.script_path, "picture")
+        StveTestCase.set("system.tmp", self.data_path)
+        self.base_library_execute_success("picture_09.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_10(self):
-        StveTestCase.set("system.tmp", self.tmp_path)
-        self.base_library_execute_success("library_picture_10.py")
+        self.script_path = os.path.join(self.script_path, "picture")
+        StveTestCase.set("system.tmp", self.data_path)
+        self.base_library_execute_success("picture_10.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_11(self):
-        StveTestCase.set("system.tmp", self.tmp_path)
-        self.base_library_execute_success("library_picture_11.py")
+        self.script_path = os.path.join(self.script_path, "picture")
+        StveTestCase.set("system.tmp", self.data_path)
+        self.base_library_execute_success("picture_11.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_picture_success_12(self):
-        StveTestCase.set("system.tmp", self.tmp_path)
-        self.base_library_execute_success("library_picture_12.py")
+        self.script_path = os.path.join(self.script_path, "picture")
+        StveTestCase.set("system.tmp", self.data_path)
+        self.base_library_execute_success("picture_12.py")
