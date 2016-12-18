@@ -1,25 +1,19 @@
 sudo: false
 git:
-    submodules: false
+  submodules: false
 language: python
 python:
-    - "2.7"
-    - "3.4"
-    - "3.5"
-    # does not have headers provided, please ask https://launchpad.net/~pypy/+archive/ppa
-    # maintainers to fix their pypy-dev package.
-    - "pypy"
-
-before_install:
-    # command to install dependencies
-
+- '2.7'
+- '3.4'
+- '3.5'
+- pypy
+before_install: 
 install:
-    # - pip install .
-    - pip install -r requirements-core.txt
-
-# command to run tests
+- pip install -r requirements-core.txt
 script:
-    - nosetests -v -e=*_lib_* --with-xunit --with-coverage --cover-erase --cover-package=stve
-
+- nosetests -v -e=*_lib_* --with-xunit --with-coverage --cover-erase --cover-package=stve
 after_success:
-    - coveralls
+- coveralls
+notifications:
+  slack:
+    secure: nEAucvXC4eb4dTJQmLzTEQdkAkStZNTc8Oh2Lu5hoWEsNVCzGjdBSeNq5HxvRwYnfuptYePxuVMD3SY5gUpY3IqtM5FotDt1NvvhyK+gucEKRP9K5W377yvbUhcJ30pWqbLroupkCeMc9bpNRkTeUbz0V0RDUiA42/czp4C80dmjfbWh/zjbhcNg5EmHmet9sKqpI4YDgXDKG6A/bbm/vHPtmb26zc382igvY+esGJEbUjmDvx0Dv+uf5s4SAgkQgvYcfeS0ZCWS6/SSWXQYoJGSZXIjXkD9p0JvK6hn2KxLO488FvaSdbHFhVcSh1R5u3CuuVYZE9/6EnW0I9aYIaFcPkUk8NdRuPT1kbvFSsR/DgIuU6v175dmNusdw41On80k1dVUz3AghAGwwKKd1YlJMEbdZh+rFAbTkiTGVcscJfKOqMWrL4aL2mEkaan3LBJEnsfovZSpLdF0USengYZCm5i9+PC0UGIhKNWs/XNq+OnWddNo17nUueeoG44a17dXKQgHFo3pYTbWHEZqDmOgZJb581anG8YhBrJhCzL0UXe5T/6WtbXNmZPW8MsHm26Zff6cPb36YOM7jXIIgkvwpnyrhRZpHGiK1K84BED2BhOcJ4jktYMhpnLRntqV1V69Km0OEHPj8TjxmNc898BMjtrOvPV8X4Q0C4ZrV8A=
