@@ -1,8 +1,8 @@
 checkout:
   post:
-    - chmod +x test/data/bin/chrome/Linux/x86/chromedriver
-    - chmod +x test/data/bin/chrome/Linux/x86/chromedriver
-    - ls -la test/data/bin/*
+    - chmod +x ./test/data/bin/chrome/Linux/x86/chromedriver
+    - chmod +x ./test/data/bin/chrome/Linux/x86/chromedriver
+    - ls -la ./test/data/bin/*
 
 machine:
     java:
