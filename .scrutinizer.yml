@@ -22,11 +22,6 @@ build:
         override:
             -　
                 nosetests -v -e=*_lib_* --with-xunit --with-coverage --cover-erase --cover-package=stve
-            　  #coverage:
-                #    file: .coverage
-                #    config: .coveragerc
-                #    format: py-cc
-
 
 #tools:
 #    pylint:
