@@ -50,7 +50,7 @@ test:
         # - circle-android wait-for-boot
         # - adb devices
         # - tox -v
-        - chmod +x test/data/bin/*
+        - /bin/bash opencv_setup.sh
         - nosetests --verbose --nocapture --logging-level=DEBUG --with-xunit --with-coverage --cover-branches --cover-package=stve --cover-html
         - python setup.py bdist_wheel
 
