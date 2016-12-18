@@ -20,8 +20,7 @@ dependencies:
         #- sudo apt-get install --only-upgrade google-chrome-stable
         - echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
         - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        - sudo apt-get update
-        - sudo apt-get install google-chrome-stable
+        - sudo apt-get update; sudo apt-get install google-chrome-stable
         #- curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         #- sudo dpkg -i google-chrome.deb
         #- sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
