@@ -51,10 +51,11 @@ test:
         # - adb devices
         # - tox -v
         - /bin/bash opencv_setup.sh
-        - nosetests --nocapture --with-coverage --cover-package=stve --cover-branch --cover-html --cover-erase --all-modules
+        - nosetests --nocapture --with-coverage --with-xunit --cover-package=stve --cover-branch --cover-html --cover-erase --all-modules
         - python setup.py bdist_wheel
 
     post:
+        - coveralls
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/
         - mv nosetests.xml $CIRCLE_TEST_REPORTS/nose/
         - mv dist $CIRCLE_ARTIFACTS
