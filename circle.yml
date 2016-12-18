@@ -51,7 +51,7 @@ test:
         # - adb devices
         # - tox -v
         - /bin/bash opencv_setup.sh
-        - nosetests --verbose --nocapture --logging-level=DEBUG --with-xunit --with-coverage --cover-branches --cover-package=stve --cover-html
+        - nosetests --nocapture --with-coverage --cover-package=stve --cover-branch --cover-html --cover-erase --all-modules
         - python setup.py bdist_wheel
 
     post:
