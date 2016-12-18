@@ -1,17 +1,8 @@
-build:
-    environment:
-        python: 2.7.7
-        
-    dependencies:
-        before:
-            - pip install -r requirements-core.txt
-    tests:
-        override:
-            -　command: ./nosetests -v -e=*_lib_* --with-xunit --with-coverage --cover-erase --cover-package=stve
-            　 coverage:
-                    file: .coverage
-                    config: .coveragerc
-                    format: py-cc
+checks:
+    python:
+        code_rating: true
+        duplicate_code: true
+
 filter:
     excluded_paths:
         - test/*
@@ -19,16 +10,29 @@ filter:
         - project/*
         - stve/library/*
 
-tools:
-    pylint:
-        python_version: 3     # Possible values: 2, 3
-        config_file: '.pylintrc'
+build:
+    environment:
+        python: 2.7.7
 
-    external_code_coverage:
-        timeout: 300   # How long should we wait for code coverage (in seconds).
-        runs: 1        # In how many runs have you split your tests?
+    dependencies:
+        before:
+            -
+                pip install -r requirements-core.txt
+    tests:
+        override:
+            -　
+                nosetests -v -e=*_lib_* --with-xunit --with-coverage --cover-erase --cover-package=stve
+            　  #coverage:
+                #    file: .coverage
+                #    config: .coveragerc
+                #    format: py-cc
 
-checks:
-    python:
-        code_rating: true
-        duplicate_code: true
+
+#tools:
+#    pylint:
+#        python_version: 3     # Possible values: 2, 3
+#        config_file: '.pylintrc'
+
+#    external_code_coverage:
+#        timeout: 300   # How long should we wait for code coverage (in seconds).
+#        runs: 1        # In how many runs have you split your tests?
