@@ -32,22 +32,24 @@ dependencies:
 
         - pip -V
         - pip install -U -r requirements.txt
-        # - echo y | android update sdk --no-ui --all --filter "tool"
-        # - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
-        # - echo y | android update sdk --no-ui --all --filter "extra-android-support"
-        # - echo y | android update sdk --no-ui --all --filter "extra-google-google_play_services"
-        # - echo y | android update sdk --no-ui --all --filter "extra-google-m2repository"
-        # - echo y | android update sdk --no-ui --all --filter "android-23"
-        # - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
-        # - echo n | android create avd --force --name emulator-android-23 --target android-23 -c 50M
+
+        # Open Android Emulator
+        - echo y | android update sdk --no-ui --all --filter "tool"
+        - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
+        - echo y | android update sdk --no-ui --all --filter "extra-android-support"
+        - echo y | android update sdk --no-ui --all --filter "extra-google-google_play_services"
+        - echo y | android update sdk --no-ui --all --filter "extra-google-m2repository"
+        - echo y | android update sdk --no-ui --all --filter "android-23"
+        - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
+        - echo n | android create avd --force --name emulator-android-23 --target android-23 -c 50M
 
 test:
     override:
-        #- emulator -avd emulator-android-23 -no-audio -no-window:
-        #     background: true
-        #     parallel: true
-        # - circle-android wait-for-boot
-        # - adb devices
+        - emulator -avd emulator-android-23 -no-audio -no-window:
+             background: true
+             parallel: true
+        - circle-android wait-for-boot
+        - adb devices
         # - tox -v
         - /bin/bash opencv_setup.sh
         - nosetests --nocapture --with-coverage --with-xunit --cover-package=stve --cover-branch --cover-html --cover-erase --all-modules
