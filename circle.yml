@@ -34,7 +34,8 @@ test:
         # - tox -v
         - chmod +x test/data/bin/*
         - nosetests --verbose --nocapture --logging-level=DEBUG --with-xunit --with-coverage --cover-branches --cover-package=stve --cover-html
-        python setup.py bdist_wheel
+        - python setup.py bdist_wheel
+
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/nose/
         - mv nosetests.xml $CIRCLE_TEST_REPORTS/nose/
