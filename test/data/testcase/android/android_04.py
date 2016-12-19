@@ -16,9 +16,7 @@ class TestCase(StveTestCase):
 
     def test(self):
         self.assertTrue("stve.android" in self.service.keys())
-        adb = self.service["stve.android"].get(self.get("android.serial"))
-        self.assertTrue(adb != None)
-        adb.exec_application(adb.get().AURA_DEBUGON, {})
+        adb = self.service["stve.android"].get(self.get("android.serial"), "hoge")
 
     @classmethod
     def tearDownClass(cls):
