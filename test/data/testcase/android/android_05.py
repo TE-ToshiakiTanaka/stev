@@ -17,14 +17,9 @@ class TestCase(StveTestCase):
 
     def test(self):
         self.assertTrue("stve.android" in self.service.keys())
-        try:
-            adb = self.service["stve.android"].get(self.get("android.serial"), "hoge")
-            self.fail()
-        except AndroidError as e:
-            pass #success
-        except Exception as e:
-            L.debug(str(e))
-            self.fail()
+        adb = self.service["stve.android"].get(self.get("android.serial"))
+        L.info("Android Serial : %s" % adb.get().SERIAL)
+        self.assertEqual(adb.get().SERIAL, self.get("android.serial"))
 
     @classmethod
     def tearDownClass(cls):

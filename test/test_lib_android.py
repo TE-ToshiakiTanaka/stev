@@ -33,9 +33,23 @@ class TestAndroidTestRunner(TSTR):
         self.base_library_execute_success("android_03.py")
 
     @with_setup(TSTR.setup, TSTR.teardown)
-    @raises(AndroidError)
     def test_library_execute_android_success_04(self):
         serial = run("adb get-serialno")[1].splitlines()[-1]
         StveTestCase.set("android.serial", serial)
         self.script_path = os.path.join(self.script_path, "android")
         self.base_library_execute_success("android_04.py")
+
+    @with_setup(TSTR.setup, TSTR.teardown)
+    def test_library_execute_android_success_05(self):
+        serial = run("adb get-serialno")[1].splitlines()[-1]
+        StveTestCase.set("android.serial", serial)
+        self.script_path = os.path.join(self.script_path, "android")
+        self.base_library_execute_success("android_05.py")
+
+    @with_setup(TSTR.setup, TSTR.teardown)
+    def test_library_execute_android_success_06(self):
+        serial = run("adb get-serialno")[1].splitlines()[-1]
+        StveTestCase.set("android.serial", serial)
+        StveTestCase.set("system.tmp", self.data_path)
+        self.script_path = os.path.join(self.script_path, "android")
+        self.base_library_execute_success("android_06.py")
