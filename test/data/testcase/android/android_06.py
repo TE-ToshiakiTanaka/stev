@@ -19,6 +19,7 @@ class TestCase(StveTestCase):
         try:
             self.assertTrue("stve.android" in self.service.keys())
             adb = self.service["stve.android"].get(self.get("android.serial"))
+            L.info(self.get("android.apk"))
             adb.install_application(self.get("android.apk"), build=True)
             adb.exec_application(adb.get().AURA_DEBUGON, {})
         except Exception as e:
