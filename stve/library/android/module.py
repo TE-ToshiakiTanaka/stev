@@ -176,7 +176,7 @@ class AndroidApplication(object):
     def release(self, directory):
         os.chdir(directory)
         if os.name =='nt': result = run("gradlew.bat assembleRelease")
-        else: result = run("gradlew assembleRelease")
+        else: result = run("./gradlew assembleRelease")
 
         if result[0] == 0:
             L.info(result[1].replace("\n",""))
@@ -214,7 +214,7 @@ class AndroidUiAutomator(object):
     def build(self, directory):
         os.chdir(directory)
         if os.name =='nt': result = run("gradlew.bat uiautomatorbuild")
-        else: result = run("gradlew uiautomatorbuild")
+    else: result = run("./gradlew uiautomatorbuild")
 
         if result[0] == 0:
             L.info(result[1].replace("\n",""))
