@@ -45,7 +45,7 @@ def run_bg(cmd, cwd=None, debug=False):
     returncode = proc.returncode
     return (returncode)
 
-def run(cmd, cwd=None, timeout=60, debug=False, shell=False):
+def run(cmd, cwd=None, timeout=300, debug=False, shell=False):
     if shell == False and type(cmd) in STRING_SET:
         cmd = [c for c in cmd.split() if c != '']
     if debug:

@@ -15,21 +15,16 @@ machine:
         version: '2.7.10'
     timezone: Asia/Tokyo
     environment:
-        # ANDROID_HOME: /usr/local/android-sdk-linux
+        ANDROID_HOME: /usr/local/android-sdk-linux
         TOX_PY27: '2.7.10'
         COVERALLS_REPO_TOKEN: OGUeBq6LASAI9oBXU2uBUCHGzSgFOMTsC
 
 dependencies:
     pre:
         # Latest Google Chrome Install.
-        #- sudo apt-get install --only-upgrade google-chrome-stable
         - echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
         - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
         - sudo apt-get update; sudo apt-get install google-chrome-stable
-        #- curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        #- sudo dpkg -i google-chrome.deb
-        #- sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
-        #- rm google-chrome.deb
 
         # OpenCV install
         - /bin/bash opencv_install.sh
@@ -56,7 +51,7 @@ test:
         - adb devices
         # - tox -v
         - /bin/bash opencv_setup.sh
-        - nosetests --nocapture --with-coverage --with-xunit --cover-package=stve --cover-branch --cover-html --cover-erase --all-modules
+        - nosetests --verbosity=1 --nocapture --with-coverage --with-xunit --cover-package=stve --cover-erase --cover-branch --cover-html --all-modules
         - python setup.py bdist_wheel
 
     post:
