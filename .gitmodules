@@ -1,0 +1,6 @@
+[submodule "test/data/bin/apk/aura"]
+	path = test/data/bin/apk/aura
+	url = git@github.com:TE-ToshiakiTanaka/aura.git
+[submodule "test/data/bin/jar/aubs"]
+	path = test/data/bin/jar/aubs
+	url = git@github.com:TE-ToshiakiTanaka/aubs.git

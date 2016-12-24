@@ -16,10 +16,14 @@ class TestCase(StveTestCase):
         L.info("*** Start TestCase   : %s *** " % __file__)
 
     def test(self):
-        self.assertTrue("stve.android" in self.service.keys())
-        adb = self.service["stve.android"].get(self.get("android.serial"))
-        adb.snapshot("screen.png", self.get("system.tmp"))
-        self.assertTrue(os.path.exists(os.path.join(self.get("system.tmp"), "screen.png")))
+        try:
+            self.assertTrue("stve.android" in self.service.keys())
+            adb = self.service["stve.android"].get(self.get("android.serial"))
+            adb.install_application(self.get("android.apk"), build=True)
+            adb.exec_application(adb.get().AURA_DEBUGON, {})
+        except Exception as e:
+            L.warning(str(e))
+            self.fail()
 
     @classmethod
     def tearDownClass(cls):

@@ -31,5 +31,5 @@ class Android:
     AUBS_SYSTEM_ALLOWAPP = "jp.setsulla.atve.aubs.system.AndroidTest#testAllowSettingsApp"
 
     # AURA Service
-    AURA_PACKAGE = "jp.setsulla.stve.aura"
-    AURA_DEBUGON = "jp.setsulla.stve.aura.DEBUG_ON"
+    AURA_PACKAGE = "jp.setsulla.aura"
+    AURA_DEBUGON = "jp.setsulla.aura.DEBUG_ON"

@@ -14,6 +14,13 @@ if not LIB_PATH in sys.path:
 from runner import TestStveTestRunner as TSTR
 
 class TestAndroidTestRunner(TSTR):
+    def get_apk_path(self):
+        return os.path.join(
+            self.bin_path, "apk", "aura")
+
+    def get_jar_path(self):
+        return os.path.join(
+            self.bin_path, "jar", "aubs")
 
     @with_setup(TSTR.setup, TSTR.teardown)
     def test_library_execute_android_success_01(self):
@@ -50,6 +57,6 @@ class TestAndroidTestRunner(TSTR):
     def test_library_execute_android_success_06(self):
         serial = run("adb get-serialno")[1].splitlines()[-1]
         StveTestCase.set("android.serial", serial)
-        StveTestCase.set("system.tmp", self.data_path)
+        StveTestCase.set("android.apk", self.get_apk_path())
         self.script_path = os.path.join(self.script_path, "android")
         self.base_library_execute_success("android_06.py")

@@ -1,5 +1,7 @@
 checkout:
   post:
+    - git submodule init 
+    - git submodule update
     - chmod +x ./test/data/bin/webdriver/chrome/Linux/x86/chromedriver
     - chmod +x ./test/data/bin/webdriver/chrome/Linux/x86_64/chromedriver
     - ls -la ./test/data/bin/webdriver/chrome/Linux/x86/*
