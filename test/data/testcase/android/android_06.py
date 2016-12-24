@@ -21,7 +21,7 @@ class TestCase(StveTestCase):
             adb = self.service["stve.android"].get(self.get("android.serial"))
             L.info(self.get("android.apk"))
             adb.install_application(self.get("android.apk"), build=True)
-            adb.exec_application(adb.get().AURA_DEBUGON, {})
+            self.assertEqual(adb.exec_application(adb.get().AURA_DEBUGON, {}), None)
         except Exception as e:
             L.warning(str(e))
             self.fail()

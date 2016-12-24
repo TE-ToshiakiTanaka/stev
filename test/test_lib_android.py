@@ -1,6 +1,5 @@
 import os
 import sys
-
 from stve.log import LOG as L
 from stve.cmd import run
 from stve.script import StveTestCase

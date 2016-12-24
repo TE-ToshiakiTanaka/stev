@@ -21,7 +21,7 @@ class TestCase(StveTestCase):
             adb = self.service["stve.android"].get(self.get("android.serial"), "hoge")
             self.fail()
         except AndroidError as e:
-            pass #success
+            self.assertTrue(True)
         except Exception as e:
             L.debug(str(e))
             self.fail()
