@@ -21,7 +21,9 @@ class TestCase(StveTestCase):
             adb = self.service["stve.android"].get(self.get("android.serial"))
             L.info(self.get("android.apk"))
             adb.install_application(self.get("android.apk"), build=True)
-            self.assertEqual(adb.exec_application(adb.get().AURA_DEBUGON, {}), None)
+            bundle = {}; bundle['hoge'] = "fuga"
+            self.assertEqual(adb.exec_application(adb.get().AURA_DEBUGON, bundle), None)
+            self.assertEqual(adb.uninstall_application(adb.get().AURA_PACKAGE), None)
         except Exception as e:
             L.warning(str(e))
             self.fail()

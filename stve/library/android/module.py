@@ -202,7 +202,7 @@ class AndroidApplication(object):
     def execute(self, command, bundle):
         arg = ""
         for k, v in bundle.items():
-            args += " -e %s %s" % (k, v)
+            arg += " -e %s %s" % (k, v)
         result = self._adb.shell("am startservice -a %s %s" % (command, arg))
         L.info(result); return result
 
@@ -250,6 +250,9 @@ class Android(object):
     def install_application(self, directory, build=False):
         if build: self._application.release(directory)
         self._application.install(directory)
+
+    def uninstall_application(self, package):
+        self._application.uninstall(package)
 
     def exec_application(self, command, bundle):
         self._application.execute(command, bundle)
