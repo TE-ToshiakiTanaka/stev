@@ -59,3 +59,11 @@ class TestAndroidTestRunner(TSTR):
         StveTestCase.set("android.apk", self.get_apk_path())
         self.script_path = os.path.join(self.script_path, "android")
         self.base_library_execute_success("android_06.py")
+
+    @with_setup(TSTR.setup, TSTR.teardown)
+    def test_library_execute_android_success_07(self):
+        serial = run("adb get-serialno")[1].splitlines()[-1]
+        StveTestCase.set("android.serial", serial)
+        StveTestCase.set("android.jar", self.get_jar_path())
+        self.script_path = os.path.join(self.script_path, "android")
+        self.base_library_execute_success("android_07.py")
