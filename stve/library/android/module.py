@@ -19,7 +19,7 @@ UIAUTOMATOR_PATH = "/data/local/tmp/"
 
 ADB_ROOT = os.path.normpath(os.path.dirname(__file__))
 
-L = Log("Android.Library.ATVE")
+L = Log("Android.Library.STVE")
 
 class AndroidBase(object):
     def __init__(self, profile, host=PROFILE_PATH):
@@ -328,6 +328,31 @@ class Android(object):
         package = app.split("/")[0]
         cmd = "force-stop %s " % (package)
         return self.am(cmd)
+
+    def getprop(self, prop):
+        if "getprop" in prop:
+            L.debug("command include [getprop]. : %s" % prop)
+        cmd = "getprop %s" % prop
+        return self._adb.shell(cmd)
+
+    def setprop(self, prop, value):
+        if "setprop" in prop:
+            L.debug("command include [setprop]. : %s" % prop)
+        cmd = "setprop %s %s" % (prop, value)
+        return self._adb.shell(cmd)
+
+    def power(self):
+        self.keyevent(self.get().KEYCODE_POWER)
+
+    def boot_completed(self):
+        return self.getprop(self.get().PROP_BOOT_COMPLETED)
+
+    def reboot(self):
+        self._adb.restart()
+        time.sleep(20)
+        while self.boot_completed() != "1":
+            time.sleep(5)
+
 
 if __name__ == '__main__':
     a = Android("YT911C1ZCS")

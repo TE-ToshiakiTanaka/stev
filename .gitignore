@@ -102,3 +102,4 @@ stve/library/android/jar/*/.gradle
 stve/library/android/jar/*/build
 
 cover
+test/data/config.ini

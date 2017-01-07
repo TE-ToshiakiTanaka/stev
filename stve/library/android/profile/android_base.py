@@ -22,6 +22,8 @@ class Android:
     CATEGORY_STATUSBAR = "statusbar"
     CATEGORY_ACTIVITY = "activity activities"
 
+    VAL_BATTERY = "mBatteryLevel"
+
     # UiAutomator Jar : Default LASCALL
     JAR_AUBS = "aubs.jar"
 
