@@ -66,7 +66,7 @@ class TestCase(testcase.TestCase_Base):
         L.info(p);
         if not self.enable_timeout("form_fleet_1_focus.png", loop=2, timeout=2):
             self.tap_timeout("form_fleet_1.png"); self.sleep()
-        self.tap_timeout_crop_timeout("formation_select.png", p); self.sleep()
+        self.tap_timeout_crop("formation_select.png", p); self.sleep()
         time.sleep(3)
         fname = self.adb_screenshot("formation_%s.png" % self.adb.get().SERIAL)
         if self.adb.get().LOCATE == "V":
@@ -101,9 +101,9 @@ class TestCase(testcase.TestCase_Base):
         if self.enable_timeout("attack_unable.png", loop=2, timeout=1):
             self.slack_message(self.get("bot.attack_failed"))
             self.home(); return False
-        if self.enable_pattern("attack_rack*", loop=1):
+        if self.enable_pattern_timeout("attack_rack*", loop=1):
             self.slack_message(self.get("bot.attack_rack")); self.home(); return True
-        if self.enable_pattern("attack_damage*", loop=1):
+        if self.enable_pattern_timeout("attack_damage*", loop=1):
             self.slack_message(self.get("bot.attack_damage")); self.home(); return True
         self.tap_timeout("attack_start.png"); time.sleep(10)
         self.slack_message(self.get("bot.attack_success"))

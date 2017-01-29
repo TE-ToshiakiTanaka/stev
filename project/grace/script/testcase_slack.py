@@ -1,6 +1,8 @@
 import os
 import sys
 
+from stve.exception import *
+
 from grace.utility import *
 from grace.utility import LOG as L
 from grace.script import testcase_base
