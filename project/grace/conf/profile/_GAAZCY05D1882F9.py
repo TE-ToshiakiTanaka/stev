@@ -18,5 +18,21 @@ class _GAAZCY05D1882F9(android_base.Android):
     HEIGHT = "1080"
     LOCATE = "H"
 
+    EXERCISES_X = "1590"
+    EXERCISES_Y = "390"
+    EXERCISES_WIDTH = "180"
+    EXERCISES_HEIGHT = "120"
+
+    FORMATION_X = "320"
+    FORMATION_Y = "375"
+    FORMATION_WIDTH = "445"
+    FORMATION_HEIGHT = "115"
+
+    DOCKING_X = "800"
+    DOCKING_Y = "228"
+    DOCKING_WIDTH = "300"
+    DOCKING_HEIGHT = "100"
+
+
 if __name__ == "__main__":
     print(eval("_GAAZCY05D1882F9.%s" % "TMP_PICTURE"))

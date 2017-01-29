@@ -43,7 +43,10 @@ class StveTestCase(unittest.TestCase):
 
     @classmethod
     def get(cls, name):
-        return cls.config[name]
+        try:
+            return cls.config[name]
+        except KeyError as e:
+            return None
 
     def __parse(self):
         parser = argparse.ArgumentParser()

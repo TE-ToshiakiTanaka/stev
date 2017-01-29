@@ -21,12 +21,26 @@ class TestCase_Unit(StveTestCase):
                             help='TestCase Name.')
         parser.add_argument('-m', action='store', dest='mobile',
                             help='Mobile (Android) Serial ID.')
+        parser.add_argument('-d', action='store', dest='deploy',
+                            help='Deploy Fleet Number.')
+        parser.add_argument('-f', action='store', dest='fleet',
+                            help='Fleet Number. (1 ~ 4)')
+        parser.add_argument('-a', action='store', dest='attack',
+                            help='Attack ID.')
+        parser.add_argument('-e', action='store', dest='expedition',
+                            help='Expedition ID.')
         return parser
 
     @classmethod
     def get_service(cls):
         cls.adb = cls.service["stve.android"].get(cls.get("args.mobile"), PROFILE_DIR)
         cls.picture = cls.service["stve.picture"].get()
+
+        if cls.get("args.slack") == None:
+            serial = cls.get("slack.serial")
+        else:
+            serial = cls.get("args.slack")
+        cls.slack = cls.service["stve.slack"].get(serial)
 
     def get_config(cls, conf=""):
         if conf == "":
