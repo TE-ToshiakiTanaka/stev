@@ -319,3 +319,11 @@ class TestCase(testcase.TestCase_Base):
                     self.home(); return False
         time.sleep(3)
         return self.enable_timeout("home.png")
+
+    def quest(self):
+        if not self.enable_timeout("home.png"):
+            return False
+        self.tap_timeout("action_quest.png"); self.sleep()
+        self.tap_timeout("quest_ohyodo.png"); self.sleep()
+        self.adb_screenshot("capture.png")
+        return True

@@ -29,6 +29,8 @@ class TestCase_Unit(StveTestCase):
                             help='Attack ID.')
         parser.add_argument('-e', action='store', dest='expedition',
                             help='Expedition ID.')
+        parser.add_argument('-s', action='store', dest='slack',
+                            help='target slack api token.')
         return parser
 
     @classmethod
