@@ -325,5 +325,38 @@ class TestCase(testcase.TestCase_Base):
             return False
         self.tap_timeout("action_quest.png"); self.sleep()
         self.tap_timeout("quest_ohyodo.png"); self.sleep()
-        self.adb_screenshot("capture.png")
+        self.quest_done(); self.sleep()
+        self.quest_daily(); self.sleep()
+        self.quest_weekly(); self.sleep()
+        self.tap_timeout("quest_return.png"); self.sleep()
+        return True
+
+    def quest_done(self):
+        if not self.enable_timeout("mission.png"):
+            return False
+        self.tap_timeout("quest_perform.png"); self.sleep()
+        while self.tap_timeout("quest_done.png"):
+            self.sleep()
+            self.tap_timeout("quest_close.png"); self.sleep()
+        return True
+
+    def quest_daily(self, exercises=False):
+        if not self.enable_timeout("mission.png"):
+            return False
+        self.tap_timeout("quest_daily.png"); self.sleep()
+        self.tap_pattern_check_timeout("quest_daily_attack_*", "quest_acceptance.png"); self.sleep()
+        self.tap_pattern_check_timeout("quest_daily_expedition_*", "quest_acceptance.png"); self.sleep()
+        self.tap_pattern_check_timeout("quest_daily_supply_*", "quest_acceptance.png"); self.sleep()
+        if exercises:
+            self.tap_pattern_check_timeout("quest_daily_exercises_*", "quest_acceptance.png"); self.sleep()
+        return True
+
+    def quest_weekly(self, exercises=False):
+        if not self.enable_timeout("mission.png"):
+            return False
+        self.tap_timeout("quest_weekly.png"); self.sleep()
+        self.tap_pattern_check_timeout("quest_weekly_attack_*", "quest_acceptance.png"); self.sleep()
+        self.tap_pattern_check_timeout("quest_weekly_expedition_*", "quest_acceptance.png"); self.sleep()
+        if exercises:
+            self.tap_pattern_check_timeout("quest_weekly_exercises_*", "quest_acceptance.png"); self.sleep()
         return True

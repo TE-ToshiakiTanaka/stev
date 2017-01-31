@@ -13,8 +13,8 @@ from grace.utility import LOG as L
 class TestCase_Unit(StveTestCase):
     def __init__(self, *args, **kwargs):
         super(TestCase_Unit, self).__init__(*args, **kwargs)
-        self.get_config()
         self.get_service()
+        self.get_config(self.get("args.config"))
 
     def arg_parse(self, parser):
         parser.add_argument(action='store', dest='testcase',
@@ -31,6 +31,8 @@ class TestCase_Unit(StveTestCase):
                             help='Expedition ID.')
         parser.add_argument('-s', action='store', dest='slack',
                             help='target slack api token.')
+        parser.add_argument('-c', action='store', dest='config',
+                            help='Configure File.')
         return parser
 
     @classmethod
@@ -44,9 +46,12 @@ class TestCase_Unit(StveTestCase):
             serial = cls.get("args.slack")
         cls.slack = cls.service["stve.slack"].get(serial)
 
-    def get_config(cls, conf=""):
-        if conf == "":
+    def get_config(cls, conf=None):
+        if conf == None:
             conf = os.path.join(SCRIPT_DIR, "config.ini")
+        else:
+            conf = conf + ".ini"
+            conf = os.path.join(SCRIPT_DIR, conf)
         try:
             config = configparser.RawConfigParser()
             cfp = open(conf, 'r')

@@ -20,6 +20,8 @@ class TestCase(testcase_normal.TestCase):
         while self.expedition_result(): time.sleep(2)
         self.slack_message(self.get("bot.quest"))
         self.assertTrue(self.quest())
+        while self.expedition_result(): time.sleep(3)
+
 
 
     @classmethod

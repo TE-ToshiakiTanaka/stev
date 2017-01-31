@@ -148,3 +148,13 @@ class TestCase_Base(testcase_android.TestCase_Android,
             if self.tap_timeout_crop(target, point, filename, loop=loop, timeout=timeout):
                 return True
         return False
+
+    def tap_pattern_check_timeout(self, pattern, check, loop=3, timeout=0.5):
+        filename = self.adb_screenshot(self.adb.get().TMP_PICTURE)
+        targets = self.__search_pattern(pattern)
+        for target in targets:
+            result = self.find(target, self.adb.get().TMP_PICTURE)
+            L.info("reference : %s : %s" % (target, str(result)))
+            if not self.enable_timeout_crop(check, result, loop=loop, timeout=timeout):
+                return self.tap(target, self.adb.get().TMP_PICTURE)
+        return False
