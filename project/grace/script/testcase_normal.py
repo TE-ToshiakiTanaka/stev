@@ -258,6 +258,7 @@ class TestCase(testcase.TestCase_Base):
                   int(self.adb.get().EXERCISES_WIDTH),
                   int(self.adb.get().EXERCISES_HEIGHT))
         target = self.adb_screenshot(self.adb.get().TMP_PICTURE)
+        flag = True
         for _ in range(5):
             if self.enable_pattern_crop_timeout("exercises_win_*.png", p, filename=target, loop=1, timeout=1):
                 L.info("I'm already fighting. I won.")
@@ -289,17 +290,18 @@ class TestCase(testcase.TestCase_Base):
                     elif self.enable_timeout("a.png", target, loop=2, timeout=1): self.slack_message(self.get("bot.result_a"))
                     else: self.slack_message(self.get("bot.result_s"))
                     while self.tap_timeout("next.png", loop=3, timeout=2): time.sleep(5)
+                    flag = False
                     break
+
             if self.adb.get().LOCATE == "V":
                 p.x = int(p.x) - int(p.width); L.info("Point : %s" % str(p))
-                if int(p.x) < 0:
-                    self.__upload()
-                    self.home(); return False
             else:
                 p.y = int(p.y) + int(p.height); L.info("Point : %s" % str(p))
-                if int(p.y) > int(self.adb.get().HEIGHT):
-                    self.__upload()
-                    self.home(); return False
+
+        if flag:
+            self.slack_message(self.get("bot.exercises_result"))
+            self.__upload()
+            self.home(); return False
 
         time.sleep(3)
         return self.enable_timeout("home.png")
