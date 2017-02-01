@@ -51,7 +51,7 @@ class TestCase_Unit(StveTestCase):
             conf = os.path.join(SCRIPT_DIR, "config.ini")
         else:
             conf = conf + ".ini"
-            conf = os.path.join(SCRIPT_DIR, conf)
+            conf = os.path.join(SCRIPT_DIR, "config", conf)
         try:
             config = configparser.RawConfigParser()
             cfp = open(conf, 'r')

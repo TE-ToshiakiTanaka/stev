@@ -29,6 +29,13 @@ class TestCase(testcase.TestCase_Base):
     def __capture_path(self):
         return os.path.join(self.get_target(self.adb.get().TMP_PICTURE))
 
+    def __upload(self, name=None):
+        if name == None: name = self.adb.get().TMP_PICTURE
+        fname = self.adb_screenshot(name)
+        if self.adb.get().LOCATE == "V": self.picture_rotate(fname, "90")
+        self.picture_resize(fname, "480P")
+        self.slack_upload(fname)
+
     def expedition_result(self):
         if self.enable_timeout("expedition_result.png", loop=2, timeout=0.5):
             self.tap_timeout("expedition_result.png", self.__capture_path()); time.sleep(7)
@@ -38,10 +45,7 @@ class TestCase(testcase.TestCase_Base):
                 self.slack_message(self.get("bot.expedition_failed"))
             self.tap_timeout("next.png"); self.sleep()
             self.tap_timeout("next.png", self.__capture_path()); time.sleep(2)
-            fname = self.adb_screenshot(self.adb.get().TMP_PICTURE)
-            if self.adb.get().LOCATE == "V": self.picture_rotate(fname, "90")
-            self.picture_resize(fname, "480P")
-            self.slack_upload(fname)
+            self.__upload()
             self.tap_timeout("next.png"); time.sleep(2)
             return self.enable_timeout("expedition_result.png", loop=3, timeout=0.5)
         else:
@@ -68,10 +72,7 @@ class TestCase(testcase.TestCase_Base):
             self.tap_timeout("form_fleet_1.png"); self.sleep()
         self.tap_timeout_crop("formation_select.png", p); self.sleep()
         time.sleep(3)
-        fname = self.adb_screenshot("formation_%s.png" % self.adb.get().SERIAL)
-        if self.adb.get().LOCATE == "V":
-            self.picture_rotate(fname, "90")
-        self.picture_resize(fname, "480P"); self.slack_upload(fname)
+        self.__upload("formation_%s.png" % self.adb.get().SERIAL)
         return self.home()
 
     def home(self):
@@ -135,10 +136,7 @@ class TestCase(testcase.TestCase_Base):
         while self.tap_timeout("next.png", loop=3, timeout=0.5): self.sleep(base=2)
         while not self.enable_timeout("attack_withdrawal.png", loop=3, timeout=0.5):
             if self.enable_timeout("return.png", loop=3, timeout=0.5):
-                fname = self.adb_screenshot("drop_%s.png" % self.adb.get().SERIAL)
-                if self.adb.get().LOCATE == "V":
-                    self.picture_rotate(fname, "90")
-                self.picture_resize(fname, "480P"); self.slack_upload(fname)
+                self.__upload("drop_%s.png" % self.adb.get().SERIAL)
                 self.tap_timeout("return.png", loop=3, timeout=0.5)
         self.tap_timeout("attack_withdrawal.png"); time.sleep(5)
         self.slack_message(self.get("bot.attack_return"))
@@ -168,10 +166,7 @@ class TestCase(testcase.TestCase_Base):
             self._tap(position, threshold=0.49)
             self.sleep()
             if not result: break
-        fname = self.adb_screenshot("docking_%s.png" % self.adb.get().SERIAL)
-        if self.adb.get().LOCATE == "V":
-            self.picture_rotate(fname, "90")
-        self.picture_resize(fname, "480P"); self.slack_upload(fname)
+        self.__upload("docking_%s.png" % self.adb.get().SERIAL)
         return True
 
     def docking(self):
@@ -187,10 +182,7 @@ class TestCase(testcase.TestCase_Base):
             self._tap(position, threshold=0.49)
             self.sleep()
             if not result: break
-        fname = self.adb_screenshot("docking_%s.png" % self.adb.get().SERIAL)
-        if self.adb.get().LOCATE == "V":
-            self.picture_rotate(fname, "90")
-        self.picture_resize(fname, "480P"); self.upload(fname)
+        self.__upload("docking_%s.png" % self.adb.get().SERIAL)
         return True
 
     def __docking(self):
@@ -238,10 +230,7 @@ class TestCase(testcase.TestCase_Base):
         if self.enable_timeout("expedition_done.png"):
             self.slack_message(self.get("bot.expedition_start") % self.get("args.fleet"))
             time.sleep(5)
-            fname = self.adb_screenshot(self.adb.get().TMP_PICTURE)
-            if self.adb.get().LOCATE == "V":
-                self.picture_rotate(fname, "90")
-            self.picture_resize(fname, "480P"); self.slack_upload(fname)
+            self.__upload()
             return True
         else:
             self.slack_message(self.get("bot.expedition_unable") % self.get("args.fleet"))
@@ -304,19 +293,14 @@ class TestCase(testcase.TestCase_Base):
             if self.adb.get().LOCATE == "V":
                 p.x = int(p.x) - int(p.width); L.info("Point : %s" % str(p))
                 if int(p.x) < 0:
-                    fname = self.adb_screenshot("%s.png" % self.adb.get().SERIAL)
-                    self.picture_rotate(fname, "90"); self.picture_resize(fname, "480P")
-                    self.slack_message(self.get("bot.exercises_result"))
-                    self.slack_upload(fname)
+                    self.__upload()
                     self.home(); return False
             else:
                 p.y = int(p.y) + int(p.height); L.info("Point : %s" % str(p))
                 if int(p.y) > int(self.adb.get().HEIGHT):
-                    fname = self.adb_screenshot("%s.png" % self.adb.get().SERIAL)
-                    self.picture_resize(fname, "480P")
-                    self.slack_message(self.get("bot.exercises_result"))
-                    self.slack_upload(fname)
+                    self.__upload()
                     self.home(); return False
+
         time.sleep(3)
         return self.enable_timeout("home.png")
 
@@ -325,9 +309,15 @@ class TestCase(testcase.TestCase_Base):
             return False
         self.tap_timeout("action_quest.png"); self.sleep()
         self.tap_timeout("quest_ohyodo.png"); self.sleep()
+        self.slack_message(self.get("bot.quest_done"))
         self.quest_done(); self.sleep()
+        self.slack_message(self.get("bot.quest_check"))
         self.quest_daily(); self.sleep()
         self.quest_weekly(); self.sleep()
+        if not self.enable_timeout("mission.png"):
+            return False
+        self.tap_timeout("quest_perform.png"); self.sleep()
+        self.__upload("quest_%s" % self.adb.get().TMP_PICTURE)
         self.tap_timeout("quest_return.png"); self.sleep()
         return True
 
