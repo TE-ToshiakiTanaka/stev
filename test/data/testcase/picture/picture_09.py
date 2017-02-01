@@ -24,7 +24,7 @@ class TestCase(StveTestCase):
         self.assertTrue(img != None)
         pic.info(img)
         img2 = pic.resize(img, "480P")
-        self.assertTrue(str(img2.size) == "(640, 480)")
+        self.assertTrue(str(img2.size) == "(648, 480)")
 
     @classmethod
     def tearDownClass(cls):

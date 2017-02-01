@@ -88,7 +88,7 @@ class Picture(object):
         elif size == "1080P": sz = 1080
         else: return
         #cls.L.info("Base : %s" % str(pic.size))
-        width = long((long(pic.size[0]) * sz)) / long(pic.size[1])
+        width = float((float(pic.size[0]) * sz)) / float(pic.size[1])
         res = (int(width), sz)
         #cls.L.info("Resize : %s" % str(res))
         return pic.resize(res)
