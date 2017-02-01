@@ -7,6 +7,7 @@ checkout:
     - chmod +x ./test/data/bin/apk/aura/gradlew
     - chmod +x ./test/data/bin/jar/aubs/gradlew
     - ls -la ./test/data/bin/webdriver/chrome/Linux/x86/*
+    - pip install -U pip setuptools virtualenv
 
 machine:
     java:
