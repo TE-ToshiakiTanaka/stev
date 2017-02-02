@@ -1,6 +1,9 @@
 import os
 import sys
 import time
+import json
+import base64
+import urllib2
 
 from grace.utility import *
 from grace.utility import LOG as L
@@ -352,3 +355,33 @@ class TestCase(testcase.TestCase_Base):
         if exercises:
             self.tap_pattern_check_timeout("quest_weekly_exercises_*", "quest_acceptance.png"); self.sleep()
         return True
+
+    def sleep_get_status(self, userid, token, base, job):
+        try:
+            url = "%s/job/%s/api/json?token=%s" % (base, job, job)
+            L.info(url)
+            request = urllib2.Request(url)
+            b64s = base64.encodestring('%s:%s' % (userid, token)).replace('\n', '')
+            request.add_header("Authorization", "Basic %s" % b64s)
+            r = urllib2.urlopen(request)
+            root = json.loads(r.read())
+            latest = int(root['lastBuild']['number'])
+            success = int(root['lastStableBuild']['number'])
+            L.debug("Latest Number  : %d" % latest )
+            L.debug("Success Number : %d" % success )
+            return latest == success
+        finally:
+            r.close()
+
+    def sleep_invoke_job(self, userid, token, url, job):
+        try:
+            url = "%s/job/%s/build?token=%s&delay=0sec" % (url, job, job)
+            L.info(url)
+            request = urllib2.Request(url)
+            b64s = base64.encodestring('%s:%s' % (username, token)).replace('\n', '')
+            request.add_header("Authorization", "Basic %s" % b64s)
+            r = urllib2.urlopen(request)
+            L.debug("HTTP Status Code : %d" % r2.getcode())
+            return r.getcode() == 201
+        finally:
+            r.close()
