@@ -381,7 +381,7 @@ class TestCase(testcase.TestCase_Base):
             b64s = base64.encodestring('%s:%s' % (username, token)).replace('\n', '')
             request.add_header("Authorization", "Basic %s" % b64s)
             r = urllib2.urlopen(request)
-            L.debug("HTTP Status Code : %d" % r2.getcode())
+            L.debug("HTTP Status Code : %d" % r.getcode())
             return r.getcode() == 201
         finally:
             r.close()
