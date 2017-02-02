@@ -103,3 +103,7 @@ stve/library/android/jar/*/build
 
 cover
 test/data/config.ini
+
+# Project
+report
+log
