@@ -28,4 +28,4 @@ Overview
 
 ## Author
 
-[tcnksm](https://github.com/TE-ToshiakiTanaka)
+[Toshiaki Tanaka](https://github.com/TE-ToshiakiTanaka)
