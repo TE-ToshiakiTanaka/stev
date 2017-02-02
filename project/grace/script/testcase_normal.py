@@ -395,6 +395,7 @@ class TestCase(testcase.TestCase_Base):
             request.add_header("Authorization", "Basic %s" % b64s)
             r = urllib2.urlopen(request)
             L.debug("HTTP Status Code : %d" % r.getcode())
-            return r.getcode() == 201
+            status = r.getcode() == 201
+            return status
         finally:
             r.close()
