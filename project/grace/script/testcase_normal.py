@@ -15,11 +15,9 @@ class TestCase(testcase.TestCase_Base):
         if not self.enable_timeout("home.png"):
             self.login(); self.sleep()
             while self.expedition_result(): self.sleep()
-        if form == None:
-            return self.enable_timeout("home.png")
-        else:
-            self.tap_timeout("action_formation.png"); self.sleep()
-            return self.formation(form)
+        self.tap_timeout("action_formation.png"); self.sleep()
+        if form == None: return self.home()
+        else: return self.formation(form)
 
     def login(self):
         self.adb.stop(self.get("kancolle.app"))
@@ -86,11 +84,17 @@ class TestCase(testcase.TestCase_Base):
         if not self.enable_timeout("home.png"):
             return False
         self.tap_timeout("action_supply.png"); self.sleep()
-        if not self.enable_timeout(self.__fleet_focus(fleet), loop=2, timeout=0.5):
-            self.tap_timeout(self.__fleet(fleet)); self.sleep()
+        if not self.enable_timeout(self.__s_fleet_focus(fleet), loop=2, timeout=0.5):
+            self.tap_timeout(self.__s_fleet(fleet)); self.sleep()
         self.slack_message(self.get("bot.supply") % fleet)
         self.tap_timeout("supply_all.png"); self.sleep()
         return True
+
+    def __s_fleet(self, fleet):
+        return "supply_fleet_%s.png" % fleet
+
+    def __s_fleet_focus(self, fleet):
+        return "supply_fleet_%s_focus.png" % fleet
 
     def attack(self, fleet, id):
         if not self.enable_timeout("home.png"):
@@ -155,8 +159,8 @@ class TestCase(testcase.TestCase_Base):
         if not self.enable_timeout("home.png"):
             return False
         self.tap_timeout("action_supply.png"); self.sleep()
-        if not self.enable_timeout(self.__fleet_focus(fleet), loop=2, timeout=2):
-            self.tap_timeout(self.__fleet(fleet), self.__capture_path()); self.sleep()
+        if not self.enable_timeout(self.__s_fleet_focus(fleet), loop=2, timeout=2):
+            self.tap_timeout(self.__s_fleet(fleet), self.__capture_path()); self.sleep()
         self.slack_message(self.get("bot.supply") % fleet)
         self.tap_timeout("supply_all.png"); self.sleep()
         self.tap_timeout("menu_docking.png"); self.sleep()
@@ -223,8 +227,8 @@ class TestCase(testcase.TestCase_Base):
             self.slack_message(self.get("bot.expedition_done") % self.get("args.fleet"))
             return True
         self.tap_timeout("expedition_decide.png"); self.sleep()
-        if not self.enable_timeout(self.__fleet_focus(fleet), loop=2, timeout=2):
-            self.tap_timeout(self.__fleet(fleet)); self.sleep()
+        if not self.enable_timeout(self.__s_fleet_focus(fleet), loop=2, timeout=2):
+            self.tap_timeout(self.__s_fleet(fleet)); self.sleep()
         if self.enable_timeout("expedition_unable.png", loop=2, timeout=2):
             self.slack_message(self.get("bot.expedition_unable") % self.get("args.fleet"))
             self.home()
@@ -249,6 +253,12 @@ class TestCase(testcase.TestCase_Base):
         elif int(id) > 16: self.tap_timeout("expedition_stage_3.png"); time.sleep(1)
         elif int(id) > 8: self.tap_timeout("expedition_stage_2.png"); time.sleep(1)
         else: pass
+
+    def __e_fleet(self, fleet):
+        return "form_fleet_%s.png" % fleet
+
+    def __e_fleet_focus(self, fleet):
+        return "form_fleet_%s_focus.png" % fleet
 
     def exercises(self):
         if not self.enable_timeout("home.png"):
@@ -332,7 +342,7 @@ class TestCase(testcase.TestCase_Base):
         self.tap_timeout("quest_perform.png"); self.sleep()
         while self.tap_timeout("quest_done.png"):
             self.sleep()
-            self.tap_timeout("quest_close.png"); self.sleep()
+            self.tap_timeout("quest_close.png"); time.sleep(4)
         return True
 
     def quest_daily(self, exercises=False):
