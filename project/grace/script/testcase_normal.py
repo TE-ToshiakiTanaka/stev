@@ -286,7 +286,10 @@ class TestCase(testcase.TestCase_Base):
                     self.picture_rotate(fname, "90")
                 self.picture_resize(fname, "480P")
                 self.tap_timeout("exercises_start.png", loop=2, timeout=0.5); self.sleep()
-                if self.enable_timeout("exercises_unable.png", loop=2, timeout=0.5): return False
+                if self.enable_timeout("exercises_unable.png", loop=2, timeout=0.5):
+                    self.tap_timeout("exercises_return.png"); self.sleep()
+                    self.tap_timeout("exercises_x.png"); self.sleep()
+                    self.home(); return False
                 self.slack_upload(fname)
                 if self.tap_timeout("exercises_attack.png", loop=3, timeout=1):
                     self.slack_message(self.get("bot.exercises_start")); self.sleep()
