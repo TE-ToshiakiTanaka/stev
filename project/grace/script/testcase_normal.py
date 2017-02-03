@@ -44,8 +44,7 @@ class TestCase(testcase.TestCase_Base):
                 self.slack_message(self.get("bot.expedition_success"))
             elif self.enable_timeout("expedition_failed.png", loop=2, timeout=1):
                 self.slack_message(self.get("bot.expedition_failed"))
-            self.tap_timeout("next.png"); self.sleep()
-            self.tap_timeout("next.png", self.__capture_path()); time.sleep(2)
+            self.tap_timeout("next.png"); time.sleep(2)
             self.__upload()
             self.tap_timeout("next.png"); time.sleep(2)
             return self.enable_timeout("expedition_result.png", loop=3, timeout=0.5)
