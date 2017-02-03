@@ -387,15 +387,13 @@ class TestCase(testcase.TestCase_Base):
             r.close()
 
     def sleep_invoke_job(self, userid, token, url, job):
-        try:
-            url = "%s/job/%s/build?token=%s&delay=0sec" % (url, job, job)
-            L.info(url)
-            request = urllib2.Request(url)
-            b64s = base64.encodestring('%s:%s' % (username, token)).replace('\n', '')
-            request.add_header("Authorization", "Basic %s" % b64s)
-            r = urllib2.urlopen(request)
-            L.debug("HTTP Status Code : %d" % r.getcode())
-            status = r.getcode() == 201
-            return status
-        finally:
-            r.close()
+        url = "%s/job/%s/build?token=%s&delay=0sec" % (url, job, job)
+        L.info(url)
+        request = urllib2.Request(url)
+        b64s = base64.encodestring('%s:%s' % (username, token)).replace('\n', '')
+        request.add_header("Authorization", "Basic %s" % b64s)
+        r = urllib2.urlopen(request)
+        L.debug("HTTP Status Code : %d" % r.getcode())
+        status = r.getcode() == 201
+        r.close()
+        return status
