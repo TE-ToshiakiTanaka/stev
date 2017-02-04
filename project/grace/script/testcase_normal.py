@@ -44,8 +44,7 @@ class TestCase(testcase.TestCase_Base):
                 self.slack_message(self.get("bot.expedition_success"))
             elif self.enable_timeout("expedition_failed.png", loop=2, timeout=1):
                 self.slack_message(self.get("bot.expedition_failed"))
-            self.tap_timeout("next.png"); self.sleep()
-            self.tap_timeout("next.png", self.__capture_path()); time.sleep(2)
+            self.tap_timeout("next.png"); time.sleep(2)
             self.__upload()
             self.tap_timeout("next.png"); time.sleep(2)
             return self.enable_timeout("expedition_result.png", loop=3, timeout=0.5)
@@ -391,7 +390,7 @@ class TestCase(testcase.TestCase_Base):
             url = "%s/job/%s/build?token=%s&delay=0sec" % (url, job, job)
             L.info(url)
             request = urllib2.Request(url)
-            b64s = base64.encodestring('%s:%s' % (username, token)).replace('\n', '')
+            b64s = base64.encodestring('%s:%s' % (userid, token)).replace('\n', '')
             request.add_header("Authorization", "Basic %s" % b64s)
             r = urllib2.urlopen(request)
             L.debug("HTTP Status Code : %d" % r.getcode())
