@@ -13,7 +13,7 @@ class TestCase(testcase.TestCase_Base):
 
     def initialize(self, form=None):
         if not self.enable_timeout("home.png"):
-            self.login(); self.sleep()
+            self.login(); time.sleep(5)
             while self.expedition_result(): self.sleep()
         self.tap_timeout("action_formation.png"); self.sleep()
         if form == None: return self.home()
@@ -38,7 +38,7 @@ class TestCase(testcase.TestCase_Base):
         self.slack_upload(fname)
 
     def expedition_result(self):
-        if self.enable_timeout("expedition_result.png", loop=2, timeout=0.5):
+        if self.enable_timeout("expedition_result.png", loop=3, timeout=0.5):
             self.tap_timeout("expedition_result.png", self.__capture_path()); time.sleep(7)
             if self.enable_timeout("expedition_success.png", loop=2, timeout=1):
                 self.slack_message(self.get("bot.expedition_success"))
