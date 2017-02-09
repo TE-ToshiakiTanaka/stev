@@ -155,6 +155,8 @@ class TestCase_Base(testcase_android.TestCase_Android,
         for target in targets:
             result = self.find(target, self.adb.get().TMP_PICTURE)
             L.info("reference : %s : %s" % (target, str(result)))
-            if not self.enable_timeout_crop(check, result, loop=loop, timeout=timeout):
+            if result == None:
+                pass
+            elif not self.enable_timeout_crop(check, result, loop=loop, timeout=timeout):
                 return self.tap(target, self.adb.get().TMP_PICTURE)
         return False
