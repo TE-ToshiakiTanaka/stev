@@ -20,6 +20,8 @@ class TestCase_Slack(testcase_base.TestCase_Unit):
     def slack_upload(self, filepath, channel=None):
         if channel == None: channel = self.get("slack.channel")
         try:
-            self.slack.upload(filepath, channel)
+            L.warning(os.path.exists(filepath))
+            self.slack.upload(filepath, channel, filetype="image/png")
         except SlackError as e:
             L.warning(str(e))
+            raise e
