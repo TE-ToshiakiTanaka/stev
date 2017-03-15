@@ -84,6 +84,7 @@ class Picture(object):
     @classmethod
     def resize(cls, pic, size):
         if size =="240P": sz = 240
+        elif size == "360P": sz = 360
         elif size == "480P": sz = 480
         elif size == "720P": sz = 720
         elif size == "1080P": sz = 1080

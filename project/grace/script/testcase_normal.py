@@ -34,7 +34,7 @@ class TestCase(testcase.TestCase_Base):
         if name == None: name = self.adb.get().TMP_PICTURE
         fname = self.adb_screenshot(name)
         if self.adb.get().LOCATE == "V": self.picture_rotate(fname, "90")
-        self.picture_resize(fname, "240P")
+        self.picture_resize(fname, "360P")
         self.slack_upload(fname)
 
     def expedition_result(self):
