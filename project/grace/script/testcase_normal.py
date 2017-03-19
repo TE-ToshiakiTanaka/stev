@@ -105,14 +105,14 @@ class TestCase(testcase.TestCase_Base):
         self.tap_timeout("attack_decide.png"); self.sleep()
         if not self.enable_timeout(self.__fleet_focus(fleet), loop=1, timeout=1):
             self.tap_timeout(self.__fleet(fleet)); time.sleep(1)
-        if self.enable_timeout("attack_unable.png", loop=2, timeout=1):
-            self.slack_message(self.get("bot.attack_failed"))
-            self.home(); return False
         if self.enable_pattern_timeout("attack_rack*", loop=1):
             self.slack_message(self.get("bot.attack_rack")); self.home(); return True
         if self.enable_pattern_timeout("attack_damage*", loop=1):
             self.slack_message(self.get("bot.attack_damage")); self.home(); return True
-        self.tap_timeout("attack_start.png"); time.sleep(10)
+        self.tap_timeout("attack_start.png"); time.sleep(4)
+        if self.enable_timeout("attack_unable.png", loop=2, timeout=1):
+            self.slack_message(self.get("bot.attack_failed"))
+            self.home(); return False
         self.slack_message(self.get("bot.attack_success"))
         return self.enable_timeout("attack_compass.png")
         return True
