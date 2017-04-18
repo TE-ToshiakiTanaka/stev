@@ -350,7 +350,7 @@ class TestCase(testcase.TestCase_Base):
     def quest_daily(self, exercises=False):
         if not self.enable_timeout("mission.png"):
             return False
-        self.tap_timeout("quest_daily.png"); self.sleep()
+        self.tap_timeout("quest_daily.png"); self.sleep(); time.sleep(4)
         self.tap_pattern_check_timeout("quest_daily_attack_*", "quest_acceptance.png"); self.sleep()
         self.tap_pattern_check_timeout("quest_daily_expedition_*", "quest_acceptance.png"); self.sleep()
         self.tap_pattern_check_timeout("quest_daily_supply_*", "quest_acceptance.png"); self.sleep()
@@ -361,7 +361,7 @@ class TestCase(testcase.TestCase_Base):
     def quest_weekly(self, exercises=False):
         if not self.enable_timeout("mission.png"):
             return False
-        self.tap_timeout("quest_weekly.png"); self.sleep()
+        self.tap_timeout("quest_weekly.png"); self.sleep(); time.sleep(4)
         self.tap_pattern_check_timeout("quest_weekly_attack_*", "quest_acceptance.png"); self.sleep()
         self.tap_pattern_check_timeout("quest_weekly_expedition_*", "quest_acceptance.png"); self.sleep()
         if exercises:
